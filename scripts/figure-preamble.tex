@@ -1,0 +1,20 @@
+% Shared preamble for every TikZ figure. A figure file holds only its tikzpicture.
+\documentclass{article}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\usetikzlibrary{calc,angles,quotes,arrows.meta,patterns,positioning,shapes.geometric,intersections,decorations.pathreplacing,decorations.markings}
+% The book's colours
+\definecolor{accent}{HTML}{0D5C4F}
+\definecolor{gold}{HTML}{B9811A}
+\definecolor{ink}{HTML}{1F1D18}
+\definecolor{soft}{HTML}{E2EFE9}
+\definecolor{paper}{HTML}{FFFDF8}
+\definecolor{negative}{HTML}{B42318}
+\definecolor{muted}{HTML}{6F695D}
+\tikzset{
+  every picture/.style={line width=0.7pt, line cap=round, line join=round, color=ink, >={Stealth[length=2.2mm]}},
+  point/.style={circle, fill=accent, inner sep=1.4pt},
+}
+\pagestyle{empty}

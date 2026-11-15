@@ -110,11 +110,13 @@ Conventions:
 
 Figures:
 - Draw every figure yourself. Never copy, trace or screenshot a figure from a book or website.
-- Tools: GeoGebra for geometry and graphs (File → Download as → SVG); diagrams.net for trees, boxes and Venn diagrams (File → Export as → SVG). PNG is also accepted, at least 1200 px wide.
-- White or transparent background, dark lines. The page gives every figure a paper background, so it reads in both themes.
+- Preferred: TikZ. Save a file such as `figures/factor-tree-60.tex` that holds only the `\begin{tikzpicture} … \end{tikzpicture}`. The build adds the preamble, compiles it and makes `factor-tree-60.svg`. The lettering then matches the mathematics on the page. The writer does not need LaTeX installed: GitHub compiles the figure and the preview shows it.
+- The shared preamble (`scripts/figure-preamble.tex`) loads TikZ, pgfplots and the usual libraries, and defines the book's colours: `accent`, `gold`, `ink`, `soft`, `paper`, `negative`, `muted`.
+- Also accepted: an SVG from GeoGebra or diagrams.net, or a PNG at least 1200 px wide. White or transparent background, dark lines.
+- The page gives every figure a paper background, so it reads in both themes.
 - Only numbers and letters inside the figure. Urdu goes in the caption.
-- File name in lowercase English with hyphens, for example `factor-tree-60.svg`. Put it in the lesson's `figures/` folder.
-- Insert it on its own line: `![caption in Urdu](figures/factor-tree-60.svg)`.
+- File name in lowercase English with hyphens. Put it in the lesson's `figures/` folder.
+- Insert it on its own line, always with the `.svg` name: `![caption in Urdu](figures/factor-tree-60.svg)`.
 
 Credit:
 - Each person adds one entry to `contributors/contributors.yaml` (GitHub username, name, role, optional bio and photo) in their first pull request. The check fails if a lesson's author is not listed.
@@ -382,17 +384,30 @@ $$\dots,\ -3,\ -2,\ -1,\ 0,\ 1,\ 2,\ 3,\ \dots$$
 ![عددی خط پر صحیح اعداد](figures/number-line.svg)
 ```
 
-The file `figures/number-line.svg` is already in the folder.
+The figure is already in the folder as `figures/number-line.tex`, a TikZ file. The build turns it into `number-line.svg`, which is the name you write in the lesson.
 
-To add a figure of your own:
+To add a TikZ figure of your own:
 
-1. Draw it in GeoGebra or diagrams.net. Use dark lines on a white background, and only numbers and letters inside the figure.
-2. Export it as SVG (or PNG, at least 1200 px wide).
-3. Name it in lowercase English, for example `rational-numbers.svg`, and save it in the lesson's `figures/` folder.
-4. In the section file, leave an empty line, then write `![عنوان اردو میں](figures/rational-numbers.svg)`, then another empty line.
-5. Check it in the preview: in both themes and in the PDF.
+1. Create a text file in the lesson's `figures/` folder, for example `figures/thermometer.tex`.
+2. Write only the picture in it:
 
-Lesson 1.1a has an example: open its `03-explanation.md` and look for `factor-tree-60.svg`.
+```latex
+\begin{tikzpicture}[x=6.2mm]
+  \draw[<->] (-4.8,0) -- (4.8,0);
+  \foreach \x in {-4,...,4} \draw (\x,0.12) -- (\x,-0.12) node[below=3pt] {$\x$};
+  \fill[negative] (-3,0) circle (2.2pt);
+\end{tikzpicture}
+```
+
+3. In the section file, leave an empty line, then write `![عنوان اردو میں](figures/thermometer.svg)`, then another empty line. Note `.svg`, not `.tex`.
+4. Push. The check compiles the figure. If the TikZ has an error, the check turns red and names the file and the line.
+5. Open the preview and look at the figure in both themes and in the PDF.
+
+To try a picture before pushing, paste it into Overleaf inside `\documentclass[tikz]{standalone}` … `\begin{document}` … `\end{document}`.
+
+Lesson 1.1a has a second example: `figures/factor-tree-60.tex`.
+
+A figure drawn in GeoGebra or diagrams.net also works: export it as SVG, save it in `figures/`, and insert it the same way.
 
 **`04-examples.md`**: each example starts with `## مثال 1`.
 

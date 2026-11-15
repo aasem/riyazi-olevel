@@ -297,6 +297,12 @@ function lessonHtml(lesson, byId, built, people) {
     parts.push(`<section class="sec sec-${s.cls}" id="${s.cls}">${s.title ? `<h2>${s.title}</h2>` : ''}\n${html}</section>`);
   }
   lesson.terms = terms;
+  const body = parts.join('\n');
+  for (const m of body.matchAll(/<img src="(figures\/[^"]+)"/g)) {
+    const f = path.join(lesson.dir, m[1]);
+    if (!fs.existsSync(f) && !fs.existsSync(f.replace(/\.svg$/, '.tex'))) fail(lesson.where, `figure "${m[1]}" is not in the figures folder`);
+  }
+  for (const t of tikzFiles(lesson)) compileTikz(t, null);
   lesson.toc = nav.join('');
   // English terms cannot pop up on paper, so the PDF gets a list of them at the end.
   if (terms.length) {
@@ -412,6 +418,68 @@ function searchIndex(all) {
   }));
 }
 
+// ---------- TikZ figures ----------
+// figures/name.tex holds one tikzpicture. It is compiled to figures/name.svg on the site.
+const { execFileSync } = require('child_process');
+const crypto = require('crypto');
+const os = require('os');
+const PREAMBLE = fs.readFileSync(path.join(__dirname, 'figure-preamble.tex'), 'utf8');
+const FIG_CACHE = path.join(ROOT, '.cache', 'figures');
+
+function compileTikz(texFile, outSvg) {
+  const body = fs.readFileSync(texFile, 'utf8');
+  // The page is cut to the size of the picture, with a 3pt margin.
+  const doc = `${PREAMBLE}
+\\begin{document}
+\\newsavebox\\figbox
+\\sbox\\figbox{${body.trim()}}
+\\pdfpagewidth=\\dimexpr\\wd\\figbox+6pt\\relax
+\\pdfpageheight=\\dimexpr\\ht\\figbox+\\dp\\figbox+6pt\\relax
+\\pdfhorigin=3pt \\pdfvorigin=3pt
+\\shipout\\vbox{\\hbox{\\box\\figbox}}
+\\end{document}
+`;
+  const key = crypto.createHash('sha1').update(doc).digest('hex');
+  const cached = path.join(FIG_CACHE, key + '.svg');
+  if (!fs.existsSync(cached)) {
+    const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'fig-'));
+    try {
+      fs.writeFileSync(path.join(tmp, 'fig.tex'), doc);
+      try {
+        execFileSync('pdflatex', ['-interaction=nonstopmode', '-halt-on-error', 'fig.tex'], { cwd: tmp, stdio: 'pipe', timeout: 120000 });
+      } catch (e) {
+        if (e.code === 'ENOENT') throw new Error('pdflatex not found. Install TeX Live (with TikZ), or push and let GitHub build the figure.');
+        const log = String(e.stdout || '');
+        const what = log.split('\n').find((l) => l.startsWith('!')) || '! LaTeX error';
+        const at = /^l\.(\d+)/m.exec(log);
+        const first = doc.slice(0, doc.indexOf('\\sbox')).split('\n').length;   // the line where the figure's own text starts
+        fail(path.relative(ROOT, texFile), what.slice(2) + (at ? ` (near line ${Math.max(Number(at[1]) - first + 1, 1)} of the figure)` : ''));
+        return false;
+      }
+      try {
+        execFileSync('pdftocairo', ['-svg', 'fig.pdf', 'fig.svg'], { cwd: tmp, stdio: 'pipe' });
+      } catch (e) {
+        if (e.code === 'ENOENT') throw new Error('pdftocairo not found. Install poppler-utils.');
+        throw e;
+      }
+      fs.mkdirSync(FIG_CACHE, { recursive: true });
+      fs.copyFileSync(path.join(tmp, 'fig.svg'), cached);
+    } finally {
+      fs.rmSync(tmp, { recursive: true, force: true });
+    }
+  }
+  if (outSvg) {
+    fs.mkdirSync(path.dirname(outSvg), { recursive: true });
+    fs.copyFileSync(cached, outSvg);
+  }
+  return true;
+}
+
+function tikzFiles(lesson) {
+  const d = path.join(lesson.dir, 'figures');
+  return fs.existsSync(d) ? fs.readdirSync(d).filter((n) => n.endsWith('.tex')).map((n) => path.join(d, n)) : [];
+}
+
 // ---------- files ----------
 function copyDir(src, dst, filter = () => true) {
   if (!fs.existsSync(src)) return;
@@ -431,10 +499,6 @@ function copyAssets() {
   fs.copyFileSync(path.join(nm, 'katex/dist/katex.min.css'), path.join(A, 'katex/katex.min.css'));
   copyDir(path.join(nm, 'katex/dist/fonts'), path.join(A, 'katex/fonts'), (n) => n.endsWith('.woff2'));
   const fonts = [
-    '@fontsource/noto-nastaliq-urdu/files/noto-nastaliq-urdu-arabic-400-normal.woff2',
-    '@fontsource/noto-nastaliq-urdu/files/noto-nastaliq-urdu-arabic-700-normal.woff2',
-    '@fontsource/noto-naskh-arabic/files/noto-naskh-arabic-arabic-400-normal.woff2',
-    '@fontsource/noto-naskh-arabic/files/noto-naskh-arabic-arabic-700-normal.woff2',
     '@fontsource/noto-sans/files/noto-sans-latin-400-normal.woff2',
     '@fontsource/noto-sans/files/noto-sans-latin-700-normal.woff2',
   ];
@@ -514,6 +578,7 @@ async function buildPdfs(lessons) {
     const dir = path.join(OUT, 'lessons', padId(l.id));
     fs.mkdirSync(dir, { recursive: true });
     copyDir(path.join(l.dir, 'figures'), path.join(dir, 'figures'), (n) => /\.(svg|png|jpg|jpeg|webp)$/i.test(n));
+    for (const t of tikzFiles(l)) compileTikz(t, path.join(dir, 'figures', path.basename(t, '.tex') + '.svg'));
     fs.writeFileSync(path.join(dir, 'index.html'), page({
       title: `${l.id} ${l.title} · ${book.title}`,
       root: '../../',

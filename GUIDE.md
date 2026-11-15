@@ -99,7 +99,7 @@ How to type things:
 | Sub-heading | `## مفرد اعداد` |
 | Worked example | `## مثال 1`, then the question, then `**حل:**` and the steps |
 | Bullet list | `- پہلا نکتہ` |
-| Figure | `![عنوان](figures/name.svg)` and put the file in `figures/` |
+| Figure | `![عنوان](figures/name.svg)`; the file is `figures/name.tex` (TikZ) or `figures/name.svg` |
 | Table | `\| اردو \| English \|` on one line, `\|---\|---\|` on the next |
 
 Rules:
@@ -117,11 +117,12 @@ Look at lesson 1.1a (`content/ch1-number/1.01a-prime-numbers-hcf-and-lcm/`) as t
 ### Figures
 
 1. Draw the figure yourself. Never copy, trace or screenshot a figure from a book or website.
-2. Use GeoGebra for geometry and graphs (File → Download as → SVG), or diagrams.net for trees, boxes and Venn diagrams (File → Export as → SVG). PNG is also accepted, at least 1200 px wide.
-3. Use dark lines on a white or transparent background. Put only numbers and letters inside the figure; Urdu goes in the caption.
-4. Name the file in lowercase English with hyphens, for example `factor-tree-60.svg`, and save it in your lesson's `figures/` folder.
-5. In the section file, on its own line with an empty line above and below: `![عنوان اردو میں](figures/factor-tree-60.svg)`
-6. Check the figure in the preview: light theme, dark theme and PDF.
+2. Preferred: TikZ. Create a text file such as `figures/factor-tree-60.tex` that holds only `\begin{tikzpicture} … \end{tikzpicture}`. You do not need LaTeX on your computer: GitHub compiles it. Colours you can use: `accent`, `gold`, `ink`, `soft`, `paper`, `negative`, `muted`. See the two examples in lessons 1.1a and 1.1b.
+3. Also accepted: an SVG from GeoGebra (File → Download as → SVG) or diagrams.net (File → Export as → SVG), or a PNG at least 1200 px wide. Dark lines on a white or transparent background.
+4. Put only numbers and letters inside the figure; Urdu goes in the caption.
+5. Name the file in lowercase English with hyphens and save it in your lesson's `figures/` folder.
+6. In the section file, on its own line with an empty line above and below, always with the `.svg` name: `![عنوان اردو میں](figures/factor-tree-60.svg)`
+7. Check the figure in the preview: light theme, dark theme and PDF. If a TikZ file has an error, the check names the file and the line.
 
 ### 5. Save your work to GitHub
 
@@ -179,7 +180,7 @@ Review a pull request:
 4. Before merging, change `status: draft` to `status: published` in `lesson.yaml` (edit the file in the pull request).
 5. **Squash and merge**. The site rebuilds in about two minutes.
 
-Build on your own computer (optional; needs Node.js 20+ and Chrome):
+Build on your own computer (optional; needs Node.js 20+, Chrome, and for TikZ figures TeX Live with `pdflatex` and `pdftocairo`):
 
 ```bash
 npm install

@@ -27,9 +27,10 @@ content/
       brief.md             what to read, cover and practise
       lesson.yaml          id, titles, stage, needs, status, author
       sections/01…08.md    the eight sections
-      figures/             SVG or PNG drawn by us
+      figures/             TikZ (.tex), SVG or PNG drawn by us
 contributors/              contributors.yaml and photos/ (credits page)
-scripts/build.js           builds site/ (web pages, PDFs, search)
+scripts/build.js           builds site/ (web pages, PDFs, search, TikZ figures)
+scripts/figure-preamble.tex  shared preamble and colours for TikZ figures
 scripts/make-issues.js     creates the queue of issues (run once)
 .github/workflows/         check on pull requests, publish on merge
 ```

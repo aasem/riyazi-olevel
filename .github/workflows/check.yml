@@ -12,6 +12,10 @@ jobs:
         with:
           node-version: 22
           cache: npm
+      - name: Install LaTeX for TikZ figures
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends texlive-latex-base texlive-latex-recommended texlive-pictures texlive-fonts-recommended poppler-utils
       - run: npm ci
       - run: npm run build:pdf
       - uses: actions/upload-artifact@v4

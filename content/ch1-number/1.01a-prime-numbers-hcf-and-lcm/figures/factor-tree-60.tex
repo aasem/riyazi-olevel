@@ -1,0 +1,16 @@
+\begin{tikzpicture}[
+  composite/.style={draw=gold, thick, rounded corners=3pt, fill=paper, minimum width=10mm, minimum height=7mm},
+  prime/.style={draw=accent, thick, circle, fill=soft, text=accent, minimum size=8mm},
+  level distance=13mm,
+  level 1/.style={sibling distance=30mm},
+  level 2/.style={sibling distance=26mm},
+  level 3/.style={sibling distance=22mm},
+  edge from parent/.style={draw=muted}]
+  \node[composite] {$60$}
+    child {node[prime] {$2$}}
+    child {node[composite] {$30$}
+      child {node[prime] {$2$}}
+      child {node[composite] {$15$}
+        child {node[prime] {$3$}}
+        child {node[prime] {$5$}}}};
+\end{tikzpicture}

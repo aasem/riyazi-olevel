@@ -1,0 +1,8 @@
+\begin{tikzpicture}[x=6.2mm]
+  \draw[<->] (-8.8,0) -- (8.8,0);
+  \foreach \x in {-8,...,8} \draw (\x,0.12) -- (\x,-0.12);
+  \foreach \x in {-8,...,-1} \node[below=4pt, negative] at (\x,0) {$\x$};
+  \node[below=4pt] at (0,0) {$\mathbf{0}$};
+  \foreach \x in {1,...,8} \node[below=4pt, accent] at (\x,0) {$\x$};
+  \fill[negative] (-8,0) circle (2.2pt);
+\end{tikzpicture}
