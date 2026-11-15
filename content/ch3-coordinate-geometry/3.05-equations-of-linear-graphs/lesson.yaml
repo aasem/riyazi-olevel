@@ -1,5 +1,5 @@
 id: "3.5"
-title: ""                 # Urdu title, using dictionary terms
+title: "خطی ترسیمات کی مساواتیں"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Equations of linear graphs"
 stage: 3
 needs: ["3.3"]

@@ -1,5 +1,5 @@
 id: "7.1a"
-title: ""                 # Urdu title, using dictionary terms
+title: "تبدیلات: انعکاس اور انتقال"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Transformations: reflection and translation"
 stage: 2
 needs: ["3.1"]

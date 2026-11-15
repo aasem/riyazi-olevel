@@ -1,5 +1,5 @@
 id: "2.1"
-title: ""                 # Urdu title, using dictionary terms
+title: "الجبرا کا تعارف"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Introduction to algebra"
 stage: 1
 needs: ["1.6"]

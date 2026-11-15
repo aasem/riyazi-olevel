@@ -1,6 +1,6 @@
 # ریاضی: او لیول
 
-O Level Mathematics in Urdu. A free web textbook: one page per lesson, each with its own PDF in Nastaliq or Naskh.
+O Level Mathematics in Urdu. A free web textbook: one page per lesson, each with its own PDF in Nastaliq or Naskh. Light and dark themes; made for phones and tablets.
 
 **Site:** https://aasem.github.io/riyazi-olevel/
 
@@ -26,7 +26,7 @@ content/
     1.01a-prime-numbers-hcf-and-lcm/
       brief.md             what to read, cover and practise
       lesson.yaml          id, titles, stage, needs, status, author
-      sections/01…09.md    the nine sections
+      sections/01…08.md    the eight sections
       figures/             SVG or PNG drawn by us
 scripts/build.js           builds site/ (web pages and PDFs)
 scripts/make-issues.js     creates the queue of issues (run once)

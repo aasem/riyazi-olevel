@@ -1,5 +1,5 @@
 id: "8.2"
-title: ""                 # Urdu title, using dictionary terms
+title: "نسبتی اور متوقع تعدد"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Relative and expected frequencies"
 stage: 2
 needs: ["8.1"]

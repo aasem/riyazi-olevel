@@ -1,5 +1,5 @@
 id: "2.7"
-title: ""                 # Urdu title, using dictionary terms
+title: "عددی سلسلے"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Sequences"
 stage: 1
 needs: ["2.1"]

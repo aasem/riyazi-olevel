@@ -1,5 +1,5 @@
 id: "6.4"
-title: ""                 # Urdu title, using dictionary terms
+title: "تین ابعاد میں فیثاغورث اور مثلثیات"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Pythagoras and trigonometry in 3D"
 stage: 3
 needs: ["6.2b"]

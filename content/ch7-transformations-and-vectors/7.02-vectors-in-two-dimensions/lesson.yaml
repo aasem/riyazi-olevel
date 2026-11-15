@@ -1,5 +1,5 @@
 id: "7.2"
-title: ""                 # Urdu title, using dictionary terms
+title: "دو ابعاد میں سمتیے"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Vectors in two dimensions"
 stage: 4
 needs: ["7.1a"]

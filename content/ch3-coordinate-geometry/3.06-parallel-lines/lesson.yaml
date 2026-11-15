@@ -1,5 +1,5 @@
 id: "3.6"
-title: ""                 # Urdu title, using dictionary terms
+title: "متوازی خطوط"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Parallel lines"
 stage: 3
 needs: ["3.5"]

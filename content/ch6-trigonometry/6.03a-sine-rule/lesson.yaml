@@ -1,5 +1,5 @@
 id: "6.3a"
-title: ""                 # Urdu title, using dictionary terms
+title: "سائن کا قانون"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Sine rule"
 stage: 3
 needs: ["6.2a"]

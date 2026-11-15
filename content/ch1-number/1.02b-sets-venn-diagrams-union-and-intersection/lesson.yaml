@@ -1,5 +1,5 @@
 id: "1.2b"
-title: ""                 # Urdu title, using dictionary terms
+title: "سیٹ: وین اشکال، یونین اور تقاطع"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Sets: Venn diagrams, union and intersection"
 stage: 2
 needs: ["1.2a"]

@@ -1,5 +1,5 @@
 id: "2.4"
-title: ""                 # Urdu title, using dictionary terms
+title: "قوت نما (حصہ دوم)"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Indices II"
 stage: 3
 needs: ["1.7"]

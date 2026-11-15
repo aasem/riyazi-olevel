@@ -1,5 +1,5 @@
 id: "2.2d"
-title: ""                 # Urdu title, using dictionary terms
+title: "خاص کلیے اور گروہ بندی سے تجزی"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Special identities and factorising by grouping"
 stage: 2
 needs: ["2.2c"]

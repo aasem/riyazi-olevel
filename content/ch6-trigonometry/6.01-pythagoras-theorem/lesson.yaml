@@ -1,5 +1,5 @@
 id: "6.1"
-title: ""                 # Urdu title, using dictionary terms
+title: "مسئلۂ فیثاغورث"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Pythagoras' theorem"
 stage: 2
 needs: ["1.3", "4.1b"]

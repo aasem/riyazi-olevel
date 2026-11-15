@@ -1,5 +1,5 @@
 id: "9.4"
-title: ""                 # Urdu title, using dictionary terms
+title: "شماریاتی چارٹ اور اشکال"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Statistical charts and diagrams"
 stage: 1
 needs: ["9.1"]

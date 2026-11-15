@@ -1,5 +1,5 @@
 id: "7.1c"
-title: ""                 # Urdu title, using dictionary terms
+title: "تبدیلات: تکبیر"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Transformations: enlargement"
 stage: 2
 needs: ["7.1a", "4.4a"]

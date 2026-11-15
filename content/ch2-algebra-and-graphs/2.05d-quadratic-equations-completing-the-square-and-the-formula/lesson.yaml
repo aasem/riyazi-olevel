@@ -1,5 +1,5 @@
 id: "2.5d"
-title: ""                 # Urdu title, using dictionary terms
+title: "دو درجی مساواتیں: مربع مکمل کرنا اور کلیہ"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Quadratic equations: completing the square and the formula"
 stage: 3
 needs: ["2.2e", "2.5c"]

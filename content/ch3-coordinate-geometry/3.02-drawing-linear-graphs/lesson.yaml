@@ -1,5 +1,5 @@
 id: "3.2"
-title: ""                 # Urdu title, using dictionary terms
+title: "خطی ترسیمات بنانا"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Drawing linear graphs"
 stage: 1
 needs: ["3.1", "2.1"]

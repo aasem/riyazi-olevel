@@ -1,5 +1,5 @@
 id: "2.9a"
-title: ""                 # Urdu title, using dictionary terms
+title: "سفر اور تبدیلی کی ترسیمات"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Travel and conversion graphs"
 stage: 2
 needs: ["3.2", "1.12"]

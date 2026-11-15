@@ -1,5 +1,5 @@
 id: "2.12a"
-title: ""                 # Urdu title, using dictionary terms
+title: "تفاعل اور اُس کی علامت"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Functions and function notation"
 stage: 2
 needs: ["2.1"]

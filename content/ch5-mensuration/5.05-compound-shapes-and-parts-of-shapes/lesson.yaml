@@ -1,5 +1,5 @@
 id: "5.5"
-title: ""                 # Urdu title, using dictionary terms
+title: "مرکب اشکال اور اشکال کے حصے"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Compound shapes and parts of shapes"
 stage: 2
 needs: ["5.4a"]

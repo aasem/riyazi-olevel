@@ -1,5 +1,5 @@
 id: "4.3"
-title: ""                 # Urdu title, using dictionary terms
+title: "پیمانے کے مطابق نقشے"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Scale drawings"
 stage: 2
 needs: ["4.2", "1.11"]

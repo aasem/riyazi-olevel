@@ -1,5 +1,5 @@
 id: "1.4"
-title: ""                 # Urdu title, using dictionary terms
+title: "کسور، اعشاریہ اور فیصد"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Fractions, decimals and percentages"
 stage: 1
 needs: ["1.1b"]

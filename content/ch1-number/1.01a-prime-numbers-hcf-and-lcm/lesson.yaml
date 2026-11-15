@@ -1,5 +1,5 @@
 id: "1.1a"
-title: "مفرد اعداد، عادِ اعظم اور ذو اضعافِ اقل"   # Urdu title, using dictionary terms
+title: "مفرد اعداد، عادِ اعظم اور ذو اضعافِ اقل"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Prime numbers, HCF and LCM"
 stage: 1
 needs: []

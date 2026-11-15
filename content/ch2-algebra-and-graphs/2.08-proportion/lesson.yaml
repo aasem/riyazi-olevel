@@ -1,5 +1,5 @@
 id: "2.8"
-title: ""                 # Urdu title, using dictionary terms
+title: "راست اور معکوس تناسب"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Proportion"
 stage: 2
 needs: ["1.11", "2.5a"]

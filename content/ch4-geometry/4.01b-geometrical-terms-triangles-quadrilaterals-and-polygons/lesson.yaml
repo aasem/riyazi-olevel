@@ -1,5 +1,5 @@
 id: "4.1b"
-title: ""                 # Urdu title, using dictionary terms
+title: "جیومیٹری کی اصطلاحات: مثلث، چوکور اور کثیر الاضلاع"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Geometrical terms: triangles, quadrilaterals and polygons"
 stage: 1
 needs: ["4.1a"]

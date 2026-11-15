@@ -1,5 +1,5 @@
 id: "1.10"
-title: ""                 # Urdu title, using dictionary terms
+title: "درستی کی حدود"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Limits of accuracy"
 stage: 3
 needs: ["1.9"]

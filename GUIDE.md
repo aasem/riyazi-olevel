@@ -43,7 +43,6 @@ git checkout -b lesson/1.03
 Your lesson folder is named in the issue, for example `content/ch1-number/1.03-powers-and-roots/`. Do not edit `brief.md`.
 
 ```yaml
-title: "طاقتیں اور جذر"
 status: draft
 author: "YOUR-NAME"
 sources_consulted: ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]
@@ -58,12 +57,12 @@ Open `brief.md` in your lesson folder. It has three lists: **Read**, **Cover**, 
 1. **Read** the pages named in the brief, and one more reference.
 2. **Note** keywords only, no sentences: ideas, methods, common mistakes, skills.
 3. **Close** the books.
-4. **Write** the nine sections from your notes.
+4. **Write** the eight sections from your notes.
 5. **Check** every item in the brief is covered.
 
 For examples and exercises: **same skill, new question**. Take a skill from the brief, choose your own numbers and your own Pakistani setting. Never look at a book question while you write one. Every skill needs at least one worked example and three exercise questions.
 
-### The nine sections
+### The eight sections
 
 Each file in `sections/` is one section. Write below the comment line. Do not type the section heading; the website adds it.
 
@@ -77,13 +76,12 @@ Each file in `sections/` is one section. Write below the comment line. Do not ty
 | `06-exercise.md` | Three parts: `## بنیادی`, `## درمیانی`, `## اعلیٰ`. |
 | `07-answers.md` | Answers to sections 5 and 6. |
 | `08-summary.md` | 4–8 bullet points. |
-| `09-terms.md` | Table of terms: Urdu and English. |
 
 How to type things:
 
 | You want | You type |
 |---|---|
-| A term, first time | `**قدرتی اعداد** (natural numbers)` |
+| A term, first time | `[[natural numbers\|قدرتی اعداد]]` (English first, then Urdu) |
 | Mathematics in a line | `$x^2 + 1$` |
 | Mathematics on its own line | `$$\frac{a}{b}$$` |
 | Sub-heading | `## مفرد اعداد` |
@@ -96,6 +94,7 @@ Rules:
 
 - Books closed while you write. Every sentence, example and question is your own.
 - Reference books stay on your computer. Never upload pages, scans or screenshots.
+- The reader sees only the Urdu term; the English appears when they tap it. Do not write English in brackets.
 - Use terms from the dictionary: https://aasem.github.io/takneeki-lughat/ . If a term is missing, add it there first.
 - All numbers and symbols go inside `$…$`.
 - No HTML. No pictures taken from books or websites.

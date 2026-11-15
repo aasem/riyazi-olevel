@@ -1,5 +1,5 @@
 id: "6.2b"
-title: ""                 # Urdu title, using dictionary terms
+title: "قائمہ زاویہ مثلث: زاویۂ ارتفاع، زاویۂ نشیب اور بیرنگ"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Right-angled triangles: elevation, depression and bearings"
 stage: 3
 needs: ["6.2a"]

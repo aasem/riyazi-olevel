@@ -1,5 +1,5 @@
 id: "9.1"
-title: ""                 # Urdu title, using dictionary terms
+title: "شماریاتی مواد کی درجہ بندی"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Classifying statistical data"
 stage: 1
 needs: []

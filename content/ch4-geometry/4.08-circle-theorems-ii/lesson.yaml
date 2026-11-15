@@ -1,5 +1,5 @@
 id: "4.8"
-title: ""                 # Urdu title, using dictionary terms
+title: "دائرے کے مسئلے (حصہ دوم)"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Circle theorems II"
 stage: 3
 needs: ["4.7"]

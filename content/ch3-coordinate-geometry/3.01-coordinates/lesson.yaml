@@ -1,5 +1,5 @@
 id: "3.1"
-title: ""                 # Urdu title, using dictionary terms
+title: "محدّدات"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Coordinates"
 stage: 1
 needs: []

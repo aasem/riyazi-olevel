@@ -1,5 +1,5 @@
 id: "2.10b"
-title: ""                 # Urdu title, using dictionary terms
+title: "مکعبی، مقلوبی اور قوت نمائی تفاعل کی ترسیمات"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Graphs of cubic, reciprocal and exponential functions"
 stage: 3
 needs: ["2.10a", "2.4"]

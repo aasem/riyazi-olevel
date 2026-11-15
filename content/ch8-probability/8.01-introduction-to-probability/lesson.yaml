@@ -1,5 +1,5 @@
 id: "8.1"
-title: ""                 # Urdu title, using dictionary terms
+title: "احتمال کا تعارف"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Introduction to probability"
 stage: 2
 needs: ["1.4"]

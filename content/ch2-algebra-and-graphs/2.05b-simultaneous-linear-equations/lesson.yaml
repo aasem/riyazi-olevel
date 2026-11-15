@@ -1,5 +1,5 @@
 id: "2.5b"
-title: ""                 # Urdu title, using dictionary terms
+title: "ہم زمان خطی مساواتیں"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Simultaneous linear equations"
 stage: 2
 needs: ["2.5a"]

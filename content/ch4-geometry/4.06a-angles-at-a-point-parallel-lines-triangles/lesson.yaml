@@ -1,5 +1,5 @@
 id: "4.6a"
-title: ""                 # Urdu title, using dictionary terms
+title: "زاویے: نقطے پر، متوازی خطوط اور مثلث"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Angles: at a point, parallel lines, triangles"
 stage: 1
 needs: ["4.1a"]

@@ -1,5 +1,5 @@
 id: "1.17"
-title: ""                 # Urdu title, using dictionary terms
+title: "قوت نمائی اضافہ اور کمی"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Exponential growth and decay"
 stage: 4
 needs: ["1.13b"]

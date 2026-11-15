@@ -1,5 +1,5 @@
 id: "2.2b"
-title: ""                 # Urdu title, using dictionary terms
+title: "تجزی: مشترک اجزائے ضربی"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Factorising: common factors"
 stage: 1
 needs: ["2.2a"]

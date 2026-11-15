@@ -1,5 +1,5 @@
 id: "2.10a"
-title: ""                 # Urdu title, using dictionary terms
+title: "دو درجی تفاعل کی ترسیمات"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Graphs of quadratic functions"
 stage: 2
 needs: ["3.2", "2.2c"]

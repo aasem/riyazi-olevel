@@ -33,13 +33,13 @@ const SECTIONS = [
   { file: '06-exercise', cls: 'exercise', title: 'مشق' },
   { file: '07-answers', cls: 'answers', title: 'جوابات' },
   { file: '08-summary', cls: 'summary', title: 'خلاصہ' },
-  { file: '09-terms', cls: 'terms', title: 'اصطلاحات' },
 ];
 const STATUSES = ['open', 'draft', 'published'];
 const SCRIPTS = ['nastaliq', 'naskh'];
 
 const errors = [];
 const fail = (where, msg) => errors.push(`${where}: ${msg}`);
+const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 // ---------- markdown ----------
 // Collect every mathematics error (missing brace, misspelt command) instead of letting it pass silently.
@@ -54,6 +54,7 @@ katex.renderToString = (tex, opts) => {
     return katexRender(tex, { ...opts, throwOnError: false });
   }
 };
+
 const md = new MarkdownIt({ html: false, linkify: false, typographer: false })
   .use(mdKatex, { throwOnError: false });
 
@@ -67,20 +68,42 @@ md.core.ruler.push('shift_headings', (state) => {
   }
 });
 
-function renderMarkdown(src, where) {
-  const text = src.replace(/<!--[\s\S]*?-->/g, '').trim();
+// A term is written [[english term|اردو اصطلاح]]. The page shows the Urdu; the English appears on tap or hover.
+const TERM = /\[\[([^\[\]|\n]+)\|([^\[\]|\n]+)\]\]/g;
+
+function renderMarkdown(src, where, terms) {
+  let text = src.replace(/<!--[\s\S]*?-->/g, '').trim();
   if (!text) return '';
+  const found = [];
+  text = text.replace(TERM, (_, en, ur) => {
+    found.push({ en: en.trim(), ur: ur.trim() });
+    return `\uE000${found.length - 1}\uE001`;
+  });
+  if (/\[\[|\]\]/.test(text.replace(/\$\$[\s\S]*?\$\$|\$[^$\n]*\$/g, ''))) {
+    fail(where, 'a term is not written correctly. Use [[english term|اردو اصطلاح]]');
+  }
   mathErrors.length = 0;
   let html = md.render(text);
   for (const m of mathErrors) fail(where, 'mathematics error: ' + m);
+  html = html.replace(/\uE000(\d+)\uE001/g, (_, i) => {
+    const t = found[Number(i)];
+    if (terms && !terms.some((x) => x.en.toLowerCase() === t.en.toLowerCase())) terms.push(t);
+    return `<span class="term" tabindex="0" data-en="${esc(t.en)}">${esc(t.ur)}</span>`;
+  });
   // A paragraph that holds only an image becomes a figure with a caption.
   html = html.replace(
     /<p><img src="([^"]+)" alt="([^"]*)"\s*\/?><\/p>/g,
-    (_, src2, alt) => `<figure><img src="${src2}" alt="${alt}"><figcaption>${alt}</figcaption></figure>`
+    (_, src2, alt) => `<figure><div class="fig"><img src="${src2}" alt="${alt}"></div><figcaption>${alt}</figcaption></figure>`
   );
   // Tables scroll sideways on phones instead of breaking the page.
   html = html.replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>');
   return html;
+}
+
+// Each "## مثال 1" block (an h3 after rendering) becomes one card.
+function cards(html, cls) {
+  const parts = html.split(/(?=<h3>)/);
+  return parts.map((p) => (p.startsWith('<h3>') ? `<div class="card ${cls}">${p}</div>` : p)).join('\n');
 }
 
 // ---------- load content ----------
@@ -140,12 +163,10 @@ function validate(chapters) {
     ids.set(l.id, l.where);
     if (!path.basename(l.dir).startsWith(padId(l.id) + '-')) fail(l.where, `folder name must start with ${padId(l.id)}-`);
     if (!STATUSES.includes(l.status)) fail(l.where, `status must be one of: ${STATUSES.join(', ')}`);
+    if (!l.title) fail(l.where, 'title (Urdu) is missing');
     if (!l.title_en) fail(l.where, 'title_en is missing');
     if (![1, 2, 3, 4].includes(l.stage)) fail(l.where, 'stage must be 1, 2, 3 or 4');
-    if (l.status !== 'open') {
-      if (!l.title) fail(l.where, 'title (Urdu) is required once the lesson is draft or published');
-      if (!l.author) fail(l.where, 'author is required once the lesson is draft or published');
-    }
+    if (l.status !== 'open' && !l.author) fail(l.where, 'author is required once the lesson is draft or published');
   }
   for (const l of all) {
     for (const n of l.needs || []) {
@@ -155,14 +176,19 @@ function validate(chapters) {
 }
 
 // ---------- html ----------
-const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const ICON = {
+  sun: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
+  pdf: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>',
+};
 
-function page({ title, root, body, lessonPdf }) {
+function page({ title, root, body, lessonPdf, wide }) {
   return `<!DOCTYPE html>
 <html lang="ur" dir="rtl" data-script="nastaliq">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>${esc(title)}</title>
 <link rel="stylesheet" href="${root}assets/katex/katex.min.css">
 <link rel="stylesheet" href="${root}assets/style.css">
@@ -176,74 +202,99 @@ function page({ title, root, body, lessonPdf }) {
       <button type="button" data-set-script="nastaliq">نستعلیق</button>
       <button type="button" data-set-script="naskh">نسخ</button>
     </div>
-    ${lessonPdf ? `<a class="pdf-btn" data-pdf="${lessonPdf}" href="${lessonPdf}-nastaliq.pdf" download>PDF</a>` : ''}
+    <button type="button" class="icon-btn" data-toggle-theme aria-label="روشن یا تاریک">
+      <span class="i-sun">${ICON.sun}</span><span class="i-moon">${ICON.moon}</span>
+    </button>
+    ${lessonPdf ? `<a class="pdf-btn" data-pdf="${lessonPdf}" href="${lessonPdf}-nastaliq.pdf" download>${ICON.pdf}<span>PDF</span></a>` : ''}
   </div>
 </header>
-<main>
+<main class="${wide ? 'wide' : ''}">
 ${body}
 </main>
 <footer class="footer">
-  <p>${esc(book.title)} · <a href="${esc(book.dictionary_url)}">فرہنگِ اصطلاحات</a> · <a href="${esc(book.repo_url)}">GitHub</a></p>
-  <p class="en">${esc(book.title_en)}. Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. ${esc(book.disclaimer)}</p>
+  <p><a href="${esc(book.dictionary_url)}">فرہنگِ اصطلاحات</a> · <a href="${esc(book.repo_url)}">اِس کتاب میں حصہ لیں</a></p>
+  <p class="en">${esc(book.title_en)} · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> · ${esc(book.disclaimer)}</p>
 </footer>
+<div class="tip" role="tooltip" hidden></div>
 </body>
 </html>
 `;
 }
 
-function lessonHtml(lesson, byId) {
+function lessonHtml(lesson, byId, built) {
   const parts = [];
+  const nav = [];
+  const terms = [];
   for (const s of SECTIONS) {
     const f = path.join(lesson.dir, 'sections', s.file + '.md');
     if (!fs.existsSync(f)) continue;
-    const html = renderMarkdown(fs.readFileSync(f, 'utf8'), path.relative(ROOT, f));
+    let html = renderMarkdown(fs.readFileSync(f, 'utf8'), path.relative(ROOT, f), terms);
     if (!html) continue;
-    parts.push(`<section class="sec sec-${s.cls}">${s.title ? `<h2>${s.title}</h2>` : ''}\n${html}</section>`);
+    if (s.cls === 'examples') html = cards(html, 'example');
+    if (s.cls === 'tryit') html = `<div class="card try">${html}</div>`;
+    if (s.cls === 'answers') html = `<details class="reveal"><summary>جوابات دیکھیں</summary>${html}</details>`;
+    if (s.title) nav.push(`<a href="#${s.cls}">${s.title}</a>`);
+    parts.push(`<section class="sec sec-${s.cls}" id="${s.cls}">${s.title ? `<h2>${s.title}</h2>` : ''}\n${html}</section>`);
+  }
+  // English terms cannot pop up on paper, so the PDF gets a list of them at the end.
+  if (terms.length) {
+    parts.push(`<section class="sec sec-terms print-only"><h2>اصطلاحات</h2><div class="table-wrap"><table><tbody>
+${terms.map((t) => `<tr><td>${esc(t.ur)}</td><td class="en">${esc(t.en)}</td></tr>`).join('\n')}
+</tbody></table></div></section>`);
   }
   const needs = (lesson.needs || []).map(String).map((n) => {
     const t = byId.get(n);
     if (!t) return '';
-    const label = `<span class="num">${esc(n)}</span> ${esc(t.title || t.title_en)}`;
+    const label = `<span class="num">${esc(n)}</span> ${esc(t.title)}`;
     return t.status === 'open' ? `<span class="need">${label}</span>` : `<a class="need" href="../${padId(n)}/index.html">${label}</a>`;
   }).filter(Boolean);
+  const i = built.indexOf(lesson);
+  const prev = built[i - 1], next = built[i + 1];
+  const link = (l, cls, label) => l
+    ? `<a class="${cls}" href="../${padId(l.id)}/index.html"><small>${label}</small><span><span class="num">${esc(l.id)}</span> ${esc(l.title)}</span></a>`
+    : '<span></span>';
   const credits = [lesson.author && `مصنف: <span class="en">${esc(lesson.author)}</span>`, lesson.reviewer && `نظرِ ثانی: <span class="en">${esc(lesson.reviewer)}</span>`].filter(Boolean).join(' · ');
   return `<article class="lesson">
 <header class="lesson-head">
-  <p class="crumb">باب <span class="num">${lesson.chapter.chapter}</span>: ${esc(lesson.chapter.title)}</p>
-  <h1><span class="num">${esc(lesson.id)}</span> ${esc(lesson.title)}</h1>
-  <p class="title-en">${esc(lesson.title_en)}</p>
+  <p class="crumb"><a href="../../index.html">باب <span class="num">${lesson.chapter.chapter}</span> · ${esc(lesson.chapter.title)}</a></p>
+  <h1 title="${esc(lesson.title_en)}"><span class="lesson-num num">${esc(lesson.id)}</span>${esc(lesson.title)}</h1>
   ${lesson.status === 'draft' ? '<p class="badge">مسودہ</p>' : ''}
-  ${needs.length ? `<p class="needs">پہلے یہ اسباق پڑھیں: ${needs.join('، ')}</p>` : ''}
+  ${needs.length ? `<p class="needs">پہلے یہ پڑھیں: ${needs.join(' ')}</p>` : ''}
 </header>
+${nav.length > 1 ? `<nav class="sec-nav" aria-label="اِس سبق میں">${nav.join('')}</nav>` : ''}
 ${parts.join('\n')}
 ${credits ? `<p class="credits">${credits}</p>` : ''}
+<nav class="pager">${link(prev, 'prev', 'پچھلا سبق')}${link(next, 'next', 'اگلا سبق')}</nav>
 </article>`;
 }
 
 function indexHtml(chapters) {
   const all = chapters.flatMap((c) => c.lessons);
-  const done = all.filter((l) => l.status === 'published').length;
-  const drafts = all.filter((l) => l.status === 'draft').length;
-  const chaptersHtml = chapters.map((c) => `<section class="chapter">
-<h2><span class="num">${c.chapter}</span> ${esc(c.title)} <span class="title-en">${esc(c.title_en)}</span></h2>
+  const ready = all.filter((l) => l.status !== 'open').length;
+  const pct = Math.round((100 * ready) / all.length);
+  const chaptersHtml = chapters.map((c) => {
+    const n = c.lessons.filter((l) => l.status !== 'open').length;
+    return `<section class="chapter">
+<h2 title="${esc(c.title_en)}"><span class="ch-num num">${c.chapter}</span><span class="ch-title">${esc(c.title)}</span><span class="ch-count num">${n}/${c.lessons.length}</span></h2>
 <ol class="lesson-list">
 ${c.lessons.map((l) => {
-    const name = l.title
-      ? `<span class="t">${esc(l.title)}</span> <span class="title-en">${esc(l.title_en)}</span>`
-      : `<span class="title-en">${esc(l.title_en)}</span>`;
-    const inner = `<span class="num">${esc(l.id)}</span> ${name}${l.status === 'draft' ? ' <span class="badge">مسودہ</span>' : ''}`;
+    const inner = `<span class="num">${esc(l.id)}</span><span class="t">${esc(l.title)}</span>${l.status === 'draft' ? '<span class="badge">مسودہ</span>' : ''}`;
     return l.status === 'open'
-      ? `<li class="open">${inner}</li>`
-      : `<li><a href="lessons/${padId(l.id)}/index.html">${inner}</a></li>`;
+      ? `<li class="open" title="${esc(l.title_en)}">${inner}</li>`
+      : `<li title="${esc(l.title_en)}"><a href="lessons/${padId(l.id)}/index.html">${inner}</a></li>`;
   }).join('\n')}
 </ol>
-</section>`).join('\n');
+</section>`;
+  }).join('\n');
   return `<section class="hero">
 <h1>${esc(book.title)}</h1>
-<p>${esc(book.tagline)}</p>
-<p class="progress">شائع شدہ اسباق: <span class="num">${done}</span> / <span class="num">${all.length}</span>${drafts ? ` · مسودے: <span class="num">${drafts}</span>` : ''}</p>
+<p class="tagline">${esc(book.tagline)}</p>
+<div class="progress" role="img" aria-label="${ready} / ${all.length}"><span style="width:${Math.max(pct, 2)}%"></span></div>
+<p class="progress-text">دستیاب اسباق: <span class="num">${ready}</span> / <span class="num">${all.length}</span></p>
 </section>
-${chaptersHtml}`;
+<div class="chapters">
+${chaptersHtml}
+</div>`;
 }
 
 // ---------- files ----------
@@ -293,8 +344,11 @@ async function buildPdfs(lessons) {
       const dir = path.join(OUT, 'lessons', padId(l.id));
       for (const script of SCRIPTS) {
         const page = await browser.newPage();
-        await page.goto('file://' + path.join(dir, 'index.html') + '?script=' + script, { waitUntil: 'load' });
-        await page.evaluate(() => document.fonts.ready);
+        await page.goto('file://' + path.join(dir, 'index.html') + '?script=' + script + '&theme=light', { waitUntil: 'load' });
+        await page.evaluate(() => {
+          document.querySelectorAll('details').forEach((d) => { d.open = true; });
+          return document.fonts.ready;
+        });
         await page.pdf({
           path: path.join(dir, `riyazi-${padId(l.id)}-${script}.pdf`),
           format: 'A4',
@@ -321,7 +375,7 @@ async function buildPdfs(lessons) {
   const byId = new Map(all.map((l) => [l.id, l]));
   const toBuild = all.filter((l) => l.status !== 'open');
 
-  const rendered = toBuild.map((l) => [l, lessonHtml(l, byId)]);
+  const rendered = toBuild.map((l) => [l, lessonHtml(l, byId, toBuild)]);
 
   if (errors.length) {
     console.error(`\n${errors.length} problem(s):`);
@@ -335,7 +389,7 @@ async function buildPdfs(lessons) {
   fs.mkdirSync(OUT, { recursive: true });
   copyAssets();
   fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
-  fs.writeFileSync(path.join(OUT, 'index.html'), page({ title: book.title, root: '', body: indexHtml(chapters) }));
+  fs.writeFileSync(path.join(OUT, 'index.html'), page({ title: book.title, root: '', body: indexHtml(chapters), wide: true }));
   for (const [l, html] of rendered) {
     const dir = path.join(OUT, 'lessons', padId(l.id));
     fs.mkdirSync(dir, { recursive: true });

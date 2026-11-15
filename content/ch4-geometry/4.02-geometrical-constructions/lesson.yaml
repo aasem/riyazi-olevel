@@ -1,5 +1,5 @@
 id: "4.2"
-title: ""                 # Urdu title, using dictionary terms
+title: "عملی جیومیٹری"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Geometrical constructions"
 stage: 1
 needs: ["4.1a"]

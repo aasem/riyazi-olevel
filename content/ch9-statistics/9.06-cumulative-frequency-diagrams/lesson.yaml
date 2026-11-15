@@ -1,5 +1,5 @@
 id: "9.6"
-title: ""                 # Urdu title, using dictionary terms
+title: "مجموعی تعدد کی اشکال"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Cumulative frequency diagrams"
 stage: 4
 needs: ["9.3b"]

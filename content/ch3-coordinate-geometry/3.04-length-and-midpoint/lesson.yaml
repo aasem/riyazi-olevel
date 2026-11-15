@@ -1,5 +1,5 @@
 id: "3.4"
-title: ""                 # Urdu title, using dictionary terms
+title: "لمبائی اور وسطی نقطہ"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Length and midpoint"
 stage: 3
 needs: ["3.1", "6.1"]

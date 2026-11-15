@@ -1,5 +1,5 @@
 id: "2.12b"
-title: ""                 # Urdu title, using dictionary terms
+title: "معکوس اور مرکب تفاعل"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Inverse and composite functions"
 stage: 3
 needs: ["2.12a", "2.5f"]

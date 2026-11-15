@@ -1,5 +1,5 @@
 id: "5.4a"
-title: ""                 # Urdu title, using dictionary terms
+title: "سطحی رقبہ اور حجم: مکعب نما، منشور اور استوانہ"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Surface area and volume: cuboids, prisms, cylinders"
 stage: 1
 needs: ["5.2", "4.1c"]

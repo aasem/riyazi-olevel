@@ -1,5 +1,5 @@
 id: "4.1a"
-title: ""                 # Urdu title, using dictionary terms
+title: "جیومیٹری کی اصطلاحات: نقطے، خطوط اور زاویے"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Geometrical terms: points, lines and angles"
 stage: 1
 needs: []

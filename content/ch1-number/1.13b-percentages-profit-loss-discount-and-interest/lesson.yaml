@@ -1,5 +1,5 @@
 id: "1.13b"
-title: ""                 # Urdu title, using dictionary terms
+title: "فیصد: نفع، نقصان، رعایت اور سود"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Percentages: profit, loss, discount and interest"
 stage: 3
 needs: ["1.13a"]

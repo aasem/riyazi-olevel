@@ -1,5 +1,5 @@
 id: "1.15"
-title: ""                 # Urdu title, using dictionary terms
+title: "وقت"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Time"
 stage: 1
 needs: []

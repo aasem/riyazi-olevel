@@ -2,7 +2,7 @@
 
 ## 1. What we are building
 
-A free Urdu web textbook for O Level Mathematics (Cambridge 4024, Syllabus D, 2025–27) on GitHub Pages. One web page per lesson, each with its own PDF download. The reader chooses Nastaliq or Naskh on the page and in the PDF. No whole-book PDF.
+A free Urdu web textbook for O Level Mathematics (Cambridge 4024, Syllabus D, 2025–27) on GitHub Pages. One web page per lesson, each with its own PDF download. The reader chooses Nastaliq or Naskh, and a light or dark theme. The pages are in Urdu only; the English term appears when the reader taps an Urdu term. No whole-book PDF.
 
 - Repository: https://github.com/aasem/riyazi-olevel
 - Site: https://aasem.github.io/riyazi-olevel/
@@ -44,7 +44,7 @@ Questions follow one rule: **same skill, new question**. Take a skill from the b
 |---|---|---|---|
 | Chapter | باب | 9 | 1 Number |
 | Lesson | سبق | 97 | 2.5b Simultaneous linear equations |
-| Section | — | 9 per lesson | Worked examples |
+| Section | — | 8 per lesson | Worked examples |
 
 - A **lesson** is the unit of work: one author, one pull request, one web page, one PDF.
 - Size: about one week of work for one person. A large syllabus subtopic is split (a, b, c) along the D chapters that teach it.
@@ -84,20 +84,19 @@ The team can be any size. Nothing is assigned to a fixed person or a fixed numbe
 5. Before claiming a second lesson, review one lesson by someone else.
 6. The editor may move any lesson up the queue.
 
-## 6. Lesson template (the 9 sections)
+## 6. Lesson template (the 8 sections)
 
 1. Opening: a real situation from Pakistani life that needs this idea
 2. What you will learn
 3. Explanation, from the simplest case upward
 4. Worked examples: at least three, rising in difficulty
-5. Try it yourself: one question after each example
+5. Try it yourself: one question for each example
 6. Exercise: basic, intermediate, advanced
-7. Answers
+7. Answers (folded on the web page; the reader opens them)
 8. Summary
-9. Terms in this lesson: Urdu with English, linked to the dictionary
 
 Conventions:
-- Urdu term in bold, English in brackets at first use (students sit the paper in English).
+- Terms: at first use write `[[english term|اردو اصطلاح]]`. The page shows the Urdu; the English appears on tap or hover. No English in brackets and no term table. The PDF lists the terms at the end automatically.
 - Mathematics in `$…$`, left to right.
 - Terms come from Takneeki Lughat only. A missing term is added there first.
 - Refer to other lessons by link, never "as we saw above".
@@ -282,16 +281,161 @@ Rules:
 | 8.3b | Combined events: tree diagrams | 8.3a | — |
 | 9.6 | Cumulative frequency diagrams | 9.3b | — |
 
-## 10. Start
+## 10. Walkthrough: writing lesson 1.1b
 
-1. Editor publishes lessons 1.1a and 1.1b as the models.
-2. Everyone: GitHub setup, one dictionary block, then claim a Stage 1 lesson.
-3. After the first batch is published, review the process and adjust.
+Do this once yourself to see exactly what a student does. Lesson 1.1a is the finished model; keep it open beside you.
 
-## 11. Decisions
+### A. Set up (once)
 
-- Repository `riyazi-olevel`; site title "ریاضی: او لیول".
-- Licence: CC BY-SA 4.0, same as the dictionary.
-- Script: Nastaliq and Naskh, chosen by the reader.
-- Stage 4 lessons are not in D1–D3: the reference is named when Stage 4 opens.
-- Briefs: Stage 1 briefs are complete. Later stages have the Read list; Cover and Skills are added when the stage opens.
+1. Install Git (https://git-scm.com/downloads) and Obsidian (https://obsidian.md).
+2. Open a terminal (Windows: Git Bash):
+
+```bash
+git clone https://github.com/aasem/riyazi-olevel.git
+cd riyazi-olevel
+```
+
+3. In Obsidian: **Open folder as vault** → choose `riyazi-olevel`. Settings → Editor → turn on **Right-to-left (RTL)**.
+
+Students fork first and clone their fork (see `GUIDE.md`). You own the repository, so you clone it directly.
+
+### B. Read and note
+
+1. Open `content/ch1-number/1.01b-integers-rational-and-real-numbers/brief.md`.
+2. Read what it names: D1 Chapter 2, sections 2.1 and 2.4.
+3. On paper, write keywords only: negative numbers, number line, rational = a/b, terminating and recurring decimals, irrational (√2, π), real numbers, reciprocal.
+4. Close the book.
+
+### C. Start a branch
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b lesson/1.01b
+```
+
+### D. Fill `lesson.yaml`
+
+In the lesson folder, change two lines and add your sources:
+
+```yaml
+status: draft
+author: "aasem"
+sources_consulted: ["NSM D1 ch.2"]
+```
+
+### E. Write the eight sections
+
+Open each file in `sections/` and write below the comment line. Do not type the section heading.
+
+**`01-opening.md`**: one or two paragraphs.
+
+```
+جنوری کی ایک صبح سکردو میں درجۂ حرارت $-8$ ڈگری سینٹی گریڈ ہے اور کراچی میں $24$ ڈگری۔
+```
+
+**`02-objectives.md`**: a bullet list.
+
+```
+اِس سبق کے بعد آپ:
+
+- صحیح اعداد کو عددی خط پر دکھا سکیں گے۔
+- ناطق اور غیر ناطق اعداد میں فرق کر سکیں گے۔
+```
+
+**`03-explanation.md`**: sub-headings with `##`, terms with `[[english|اردو]]`, a figure.
+
+```
+## صحیح اعداد
+
+قدرتی اعداد، صفر اور منفی اعداد مل کر [[integers|صحیح اعداد]] بناتے ہیں:
+
+$$\dots,\ -3,\ -2,\ -1,\ 0,\ 1,\ 2,\ 3,\ \dots$$
+
+![عددی خط پر صحیح اعداد](figures/number-line.svg)
+```
+
+The file `figures/number-line.svg` is already in the folder.
+
+**`04-examples.md`**: each example starts with `## مثال 1`.
+
+```
+## مثال 1
+
+$0.75$ کو کسر کی صورت میں لکھیں۔
+
+**حل:**
+
+$$0.75 = \frac{75}{100} = \frac{3}{4}$$
+```
+
+**`05-try-it.md`**: one numbered question for each example.
+
+```
+1. $0.4$ کو کسر کی صورت میں لکھیں۔
+```
+
+**`06-exercise.md`**: three parts, questions numbered through.
+
+```
+## بنیادی
+
+1. $-3$، $0$ اور $5$ کو عددی خط پر دکھائیں۔
+
+## درمیانی
+
+2. بتائیں کہ $\sqrt{9}$ ناطق ہے یا غیر ناطق۔
+
+## اعلیٰ
+
+3. $\frac{5}{8}$ کا مقلوب معلوم کریں اور اُسے اعشاریہ میں لکھیں۔
+```
+
+**`07-answers.md`**: two parts.
+
+```
+## خود کیجیے
+
+1. $\frac{2}{5}$
+
+## مشق
+
+2. ناطق، کیونکہ $\sqrt{9} = 3$
+3. $\frac{8}{5} = 1.6$
+```
+
+**`08-summary.md`**: four to eight bullets.
+
+Before you finish, tick every line of `brief.md`: each Cover item is explained, and each skill has one worked example and three exercise questions.
+
+### F. Save and send
+
+```bash
+git status
+git add content/
+git commit -m "Lesson 1.1b: first draft"
+git push -u origin lesson/1.01b
+```
+
+`git status` should list only files in the 1.1b folder.
+
+### G. Pull request, check, preview
+
+1. Open https://github.com/aasem/riyazi-olevel. Click the yellow **Compare & pull request** button. Title: `Lesson 1.1b: Integers, rational and real numbers`. Click **Create pull request**.
+2. Wait about two minutes for **Check lesson**.
+   - Green tick: it builds.
+   - Red cross: click **Details**. The message names the file and the problem, for example a missing `$`. Fix it, then `git add content/`, `git commit -m "Fix"`, `git push`.
+3. To see the page: **Checks** tab → **Check lesson** → **preview** (download). Unzip and open `index.html`. Try both scripts, the dark theme, a term, and the PDF.
+
+### H. Publish
+
+1. In the pull request, open **Files changed**, edit `lesson.yaml`, and change `status: draft` to `status: published`. Commit.
+2. Click **Squash and merge**.
+3. After about two minutes the lesson is live at https://aasem.github.io/riyazi-olevel/.
+4. On your computer:
+
+```bash
+git checkout main
+git pull origin main
+git branch -d lesson/1.01b
+```

@@ -1,5 +1,5 @@
 id: "7.3"
-title: ""                 # Urdu title, using dictionary terms
+title: "سمتیے کی مقدار"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Magnitude of a vector"
 stage: 4
 needs: ["7.2", "6.1"]

@@ -1,5 +1,5 @@
 id: "8.3b"
-title: ""                 # Urdu title, using dictionary terms
+title: "مرکب واقعات: شجری اشکال"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Combined events: tree diagrams"
 stage: 4
 needs: ["8.3a"]

@@ -1,5 +1,5 @@
 id: "4.4a"
-title: ""                 # Urdu title, using dictionary terms
+title: "متماثل اور مشابہ اشکال"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Congruence and similarity"
 stage: 2
 needs: ["4.1b", "1.11"]

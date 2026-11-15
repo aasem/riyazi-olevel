@@ -1,5 +1,5 @@
 id: "2.5f"
-title: ""                 # Urdu title, using dictionary terms
+title: "کلیے اور موضوع کی تبدیلی"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Formulae and changing the subject"
 stage: 2
 needs: ["2.5a"]

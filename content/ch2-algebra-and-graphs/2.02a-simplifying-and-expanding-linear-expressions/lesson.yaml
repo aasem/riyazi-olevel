@@ -1,5 +1,5 @@
 id: "2.2a"
-title: ""                 # Urdu title, using dictionary terms
+title: "خطی عبارات کو سادہ کرنا اور پھیلانا"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Simplifying and expanding linear expressions"
 stage: 1
 needs: ["2.1"]

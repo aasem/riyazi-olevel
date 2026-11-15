@@ -1,5 +1,5 @@
 id: "9.3a"
-title: ""                 # Urdu title, using dictionary terms
+title: "اوسط اور سعت"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Averages and range"
 stage: 2
 needs: ["9.1"]

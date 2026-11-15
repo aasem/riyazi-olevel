@@ -1,5 +1,5 @@
 id: "6.3b"
-title: ""                 # Urdu title, using dictionary terms
+title: "کوسائن کا قانون اور مثلث کا رقبہ"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Cosine rule and area of a triangle"
 stage: 3
 needs: ["6.3a"]

@@ -1,5 +1,5 @@
 id: "2.5e"
-title: ""                 # Urdu title, using dictionary terms
+title: "کسری مساواتیں"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Fractional equations"
 stage: 3
 needs: ["2.3", "2.5d"]

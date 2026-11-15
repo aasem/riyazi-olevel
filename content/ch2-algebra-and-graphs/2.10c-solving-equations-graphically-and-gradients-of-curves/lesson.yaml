@@ -1,5 +1,5 @@
 id: "2.10c"
-title: ""                 # Urdu title, using dictionary terms
+title: "ترسیم سے مساوات کا حل اور منحنی کی ڈھلان"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Solving equations graphically and gradients of curves"
 stage: 3
 needs: ["2.10b"]

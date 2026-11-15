@@ -1,5 +1,5 @@
 id: "1.6"
-title: ""                 # Urdu title, using dictionary terms
+title: "چار بنیادی عمل"   # Urdu title; improve it if the dictionary has a better term
 title_en: "The four operations"
 stage: 1
 needs: ["1.1b"]

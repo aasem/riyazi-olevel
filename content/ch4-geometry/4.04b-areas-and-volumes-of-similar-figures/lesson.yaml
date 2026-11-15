@@ -1,5 +1,5 @@
 id: "4.4b"
-title: ""                 # Urdu title, using dictionary terms
+title: "مشابہ اشکال کے رقبے اور حجم"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Areas and volumes of similar figures"
 stage: 3
 needs: ["4.4a"]

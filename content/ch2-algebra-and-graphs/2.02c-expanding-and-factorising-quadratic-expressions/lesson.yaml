@@ -1,5 +1,5 @@
 id: "2.2c"
-title: ""                 # Urdu title, using dictionary terms
+title: "دو درجی عبارات کا پھیلاؤ اور تجزی"   # Urdu title; improve it if the dictionary has a better term
 title_en: "Expanding and factorising quadratic expressions"
 stage: 2
 needs: ["2.2b"]
