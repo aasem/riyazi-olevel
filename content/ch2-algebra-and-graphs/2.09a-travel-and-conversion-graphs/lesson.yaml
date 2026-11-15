@@ -1,0 +1,9 @@
+id: "2.9a"
+title: ""                 # Urdu title, using dictionary terms
+title_en: "Travel and conversion graphs"
+stage: 2
+needs: ["3.2", "1.12"]
+status: open              # open | draft | published
+author: ""                # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

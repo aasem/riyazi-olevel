@@ -1,0 +1,21 @@
+{
+  "name": "riyazi-olevel",
+  "private": true,
+  "description": "O Level Mathematics in Urdu: web textbook with a PDF per lesson",
+  "license": "CC-BY-SA-4.0",
+  "scripts": {
+    "check": "node scripts/build.js --check",
+    "build": "node scripts/build.js",
+    "build:pdf": "node scripts/build.js --pdf"
+  },
+  "dependencies": {
+    "@fontsource/noto-naskh-arabic": "^5.0.0",
+    "@fontsource/noto-nastaliq-urdu": "^5.0.0",
+    "@fontsource/noto-sans": "^5.0.0",
+    "@vscode/markdown-it-katex": "^1.1.0",
+    "js-yaml": "^4.1.0",
+    "katex": "^0.16.0",
+    "markdown-it": "^14.0.0",
+    "puppeteer-core": "^23.0.0"
+  }
+}

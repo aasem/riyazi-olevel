@@ -1,0 +1,9 @@
+id: "4.5"
+title: ""                 # Urdu title, using dictionary terms
+title_en: "Symmetry"
+stage: 2
+needs: ["4.1b"]
+status: open              # open | draft | published
+author: ""                # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]
