@@ -16,9 +16,9 @@
     return e.target && e.target.closest ? e.target.closest(sel) : null;
   }
 
-  // ---- script: Nastaliq or Naskh ----
+  // ---- script: Nastaliq, Naskh or Amiri ----
   function applyScript(v) {
-    if (v !== 'naskh') v = 'nastaliq';
+    if (v !== 'naskh' && v !== 'amiri') v = 'nastaliq';
     root.setAttribute('data-script', v);
     var buttons = document.querySelectorAll('[data-set-script]');
     for (var i = 0; i < buttons.length; i++) {

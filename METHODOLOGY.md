@@ -5,7 +5,7 @@
 A free Urdu web textbook for O Level Mathematics (Cambridge 4024, Syllabus D, 2025–27) on GitHub Pages. Title: **او لیول ریاضی**, subtitle "بمطابق نصاب کیمبرج او لیول ریاضی 4024".
 
 - One web page per lesson, each with its own PDF download. No whole-book PDF.
-- The reader chooses Nastaliq or Naskh, and a light or dark theme.
+- The reader chooses one of three scripts (Noto Nastaliq Urdu, Noto Naskh Arabic, Amiri) and a light or dark theme. Each lesson has a PDF in each script.
 - The pages are in Urdu only; the English term appears when the reader taps an Urdu term.
 - A contents frame beside the lesson on wide screens, a drawer on phones and tablets, and search over lesson titles and terms.
 - Footer: © 2026 Dr. Asim Bakhshi and contributors, CC BY-SA 4.0. Every writer and reviewer is credited on the contributors page.

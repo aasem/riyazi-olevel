@@ -35,7 +35,7 @@ const SECTIONS = [
   { file: '08-summary', cls: 'summary', title: 'خلاصہ' },
 ];
 const STATUSES = ['open', 'draft', 'published'];
-const SCRIPTS = ['nastaliq', 'naskh'];
+const SCRIPTS = ['nastaliq', 'naskh', 'amiri'];
 
 const errors = [];
 const fail = (where, msg) => errors.push(`${where}: ${msg}`);
@@ -193,6 +193,7 @@ const ICON = {
 const SCRIPT_SWITCH = `<div class="script-switch" role="group" aria-label="خط">
       <button type="button" data-set-script="nastaliq">نستعلیق</button>
       <button type="button" data-set-script="naskh">نسخ</button>
+      <button type="button" data-set-script="amiri">امیری</button>
     </div>`;
 
 // The book's contents: a frame beside the lesson on wide screens, a drawer on phones and tablets.
