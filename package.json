@@ -6,7 +6,8 @@
   "scripts": {
     "check": "node scripts/build.js --check",
     "build": "node scripts/build.js",
-    "build:pdf": "node scripts/build.js --pdf"
+    "build:pdf": "node scripts/build.js --pdf",
+    "check:colours": "node scripts/check-colours.js"
   },
   "dependencies": {
     "@fontsource/noto-sans": "^5.0.0",

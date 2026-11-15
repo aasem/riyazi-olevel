@@ -231,6 +231,7 @@ function page({ title, root, body, lessonPdf, layout, chapters, current, toc }) 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#fffdf8">
 <title>${esc(title)}</title>
 <link rel="stylesheet" href="${root}assets/katex/katex.min.css">
 <link rel="stylesheet" href="${root}assets/style.css">

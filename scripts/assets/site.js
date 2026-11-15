@@ -36,6 +36,9 @@
   function applyTheme(v) {
     if (v !== 'dark' && v !== 'light') v = systemTheme();
     root.setAttribute('data-theme', v);
+    // the browser's own bar on a phone takes the colour of the page's top bar
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', v === 'dark' ? '#171c23' : '#fffdf8');
     return v;
   }
 
