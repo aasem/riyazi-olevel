@@ -2,7 +2,7 @@ id: "1.6"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "The four operations"
 stage: 1
-needs: ["1.4"]
+needs: ["1.1b"]
 status: open              # open | draft | published
 author: ""                # your GitHub username
 reviewer: ""

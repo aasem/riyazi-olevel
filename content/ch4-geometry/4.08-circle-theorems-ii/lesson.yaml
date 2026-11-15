@@ -1,7 +1,7 @@
 id: "4.8"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Circle theorems II"
-stage: 4
+stage: 3
 needs: ["4.7"]
 status: open              # open | draft | published
 author: ""                # your GitHub username

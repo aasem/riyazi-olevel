@@ -1,0 +1,9 @@
+id: "2.10b"
+title: ""                 # Urdu title, using dictionary terms
+title_en: "Graphs of cubic, reciprocal and exponential functions"
+stage: 3
+needs: ["2.10a", "2.4"]
+status: open              # open | draft | published
+author: ""                # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

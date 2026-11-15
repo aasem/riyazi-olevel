@@ -26,7 +26,7 @@ git remote add upstream https://github.com/aasem/riyazi-olevel.git
 
 ### 1. Claim
 
-Open **Issues** on GitHub. Take the first lesson that has no one assigned. Comment "I claim this". An editor assigns it to you. Then post your outline (10–15 lines) in the same issue and wait for approval.
+Open **Issues** on GitHub. Take the first lesson that has no one assigned. Comment "I claim this". An editor assigns it to you. Read the brief and its pages, then post your outline (10–15 lines) in the same issue and wait for approval.
 
 ### 2. Start a branch
 
@@ -40,7 +40,7 @@ git checkout -b lesson/1.03
 
 ### 3. Fill `lesson.yaml`
 
-Your lesson folder is named in the issue, for example `content/ch1-number/1.03-powers-and-roots/`.
+Your lesson folder is named in the issue, for example `content/ch1-number/1.03-powers-and-roots/`. Do not edit `brief.md`.
 
 ```yaml
 title: "طاقتیں اور جذر"
@@ -51,7 +51,19 @@ sources_consulted: ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]
 
 Do not change `id`, `title_en`, `stage` or `needs`.
 
-### 4. Write the nine sections
+### 4. Read, note, close, write, check
+
+Open `brief.md` in your lesson folder. It has three lists: **Read**, **Cover**, **Skills to practise**.
+
+1. **Read** the pages named in the brief, and one more reference.
+2. **Note** keywords only, no sentences: ideas, methods, common mistakes, skills.
+3. **Close** the books.
+4. **Write** the nine sections from your notes.
+5. **Check** every item in the brief is covered.
+
+For examples and exercises: **same skill, new question**. Take a skill from the brief, choose your own numbers and your own Pakistani setting. Never look at a book question while you write one. Every skill needs at least one worked example and three exercise questions.
+
+### The nine sections
 
 Each file in `sections/` is one section. Write below the comment line. Do not type the section heading; the website adds it.
 
@@ -83,12 +95,13 @@ How to type things:
 Rules:
 
 - Books closed while you write. Every sentence, example and question is your own.
+- Reference books stay on your computer. Never upload pages, scans or screenshots.
 - Use terms from the dictionary: https://aasem.github.io/takneeki-lughat/ . If a term is missing, add it there first.
 - All numbers and symbols go inside `$…$`.
 - No HTML. No pictures taken from books or websites.
 - Solve every question yourself. You are responsible for the answers.
 
-Look at lesson 1.1 (`content/ch1-number/1.01-types-of-number/`) as the model.
+Look at lesson 1.1a (`content/ch1-number/1.01a-prime-numbers-hcf-and-lcm/`) as the model.
 
 ### 5. Save your work to GitHub
 

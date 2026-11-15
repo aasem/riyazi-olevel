@@ -1,0 +1,9 @@
+id: "2.5e"
+title: ""                 # Urdu title, using dictionary terms
+title_en: "Fractional equations"
+stage: 3
+needs: ["2.3", "2.5d"]
+status: open              # open | draft | published
+author: ""                # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

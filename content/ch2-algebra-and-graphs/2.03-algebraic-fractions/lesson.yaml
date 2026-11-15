@@ -1,7 +1,7 @@
 id: "2.3"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Algebraic fractions"
-stage: 3
+stage: 2
 needs: ["2.2c"]
 status: open              # open | draft | published
 author: ""                # your GitHub username

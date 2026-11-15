@@ -1,7 +1,7 @@
 id: "6.3b"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Cosine rule and area of a triangle"
-stage: 4
+stage: 3
 needs: ["6.3a"]
 status: open              # open | draft | published
 author: ""                # your GitHub username

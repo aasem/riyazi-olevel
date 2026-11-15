@@ -1,8 +1,8 @@
 id: "7.1c"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Transformations: enlargement"
-stage: 3
-needs: ["7.1a", "4.4"]
+stage: 2
+needs: ["7.1a", "4.4a"]
 status: open              # open | draft | published
 author: ""                # your GitHub username
 reviewer: ""

@@ -4,7 +4,7 @@ O Level Mathematics in Urdu. A free web textbook: one page per lesson, each with
 
 **Site:** https://aasem.github.io/riyazi-olevel/
 
-- 9 chapters, 90 lessons, following the topic list of Cambridge O Level Mathematics (Syllabus D) 4024.
+- 9 chapters, 97 lessons, following the topic list of Cambridge O Level Mathematics (Syllabus D) 4024.
 - Every lesson is written from scratch in Urdu by a volunteer. Nothing is translated from a commercial book.
 - Terms come from the [English–Urdu Dictionary of Scientific and Technical Terms](https://aasem.github.io/takneeki-lughat/).
 
@@ -23,7 +23,8 @@ book.yaml                  site title and links
 content/
   ch1-number/
     chapter.yaml
-    1.01-types-of-number/
+    1.01a-prime-numbers-hcf-and-lcm/
+      brief.md             what to read, cover and practise
       lesson.yaml          id, titles, stage, needs, status, author
       sections/01…09.md    the nine sections
       figures/             SVG or PNG drawn by us

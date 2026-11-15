@@ -48,9 +48,10 @@ for (const l of lessons.filter((x) => x.status === 'open')) {
     `- Stage: ${l.stage}`,
     `- Needs: ${(l.needs || []).join(', ') || 'none'}`,
     `- Folder: \`${l.folder}\``,
+    `- Brief: ${book.repo_url}/blob/main/${l.folder}/brief.md`,
     '',
     'To claim this lesson, comment "I claim this". An editor will assign it to you.',
-    'Then post your outline (10–15 lines) here before you start writing.',
+    'Read the brief, then post your outline (10–15 lines) here before you start writing.',
     '',
     `Guide: ${book.repo_url}/blob/main/GUIDE.md`,
   ].join('\n');

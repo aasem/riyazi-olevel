@@ -1,7 +1,7 @@
 id: "7.2"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Vectors in two dimensions"
-stage: 3
+stage: 4
 needs: ["7.1a"]
 status: open              # open | draft | published
 author: ""                # your GitHub username

@@ -1,7 +1,7 @@
 id: "8.3a"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Combined events: sample spaces and Venn diagrams"
-stage: 3
+stage: 4
 needs: ["8.1", "1.2b"]
 status: open              # open | draft | published
 author: ""                # your GitHub username

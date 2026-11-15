@@ -1,0 +1,9 @@
+id: "2.10c"
+title: ""                 # Urdu title, using dictionary terms
+title_en: "Solving equations graphically and gradients of curves"
+stage: 3
+needs: ["2.10b"]
+status: open              # open | draft | published
+author: ""                # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

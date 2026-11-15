@@ -1,7 +1,7 @@
 id: "2.7"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Sequences"
-stage: 2
+stage: 1
 needs: ["2.1"]
 status: open              # open | draft | published
 author: ""                # your GitHub username

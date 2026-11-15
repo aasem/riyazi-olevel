@@ -1,8 +1,8 @@
 id: "1.16"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Money"
-stage: 1
-needs: ["1.4"]
+stage: 3
+needs: ["1.11"]
 status: open              # open | draft | published
 author: ""                # your GitHub username
 reviewer: ""

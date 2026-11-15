@@ -1,8 +1,8 @@
 id: "5.5"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Compound shapes and parts of shapes"
-stage: 3
-needs: ["5.3", "5.4a"]
+stage: 2
+needs: ["5.4a"]
 status: open              # open | draft | published
 author: ""                # your GitHub username
 reviewer: ""

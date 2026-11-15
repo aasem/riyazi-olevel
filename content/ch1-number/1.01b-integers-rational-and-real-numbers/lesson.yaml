@@ -1,0 +1,9 @@
+id: "1.1b"
+title: "صحیح، ناطق اور حقیقی اعداد"   # Urdu title, using dictionary terms
+title_en: "Integers, rational and real numbers"
+stage: 1
+needs: ["1.1a"]
+status: draft             # open | draft | published
+author: "aasem"             # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

@@ -1,0 +1,9 @@
+id: "1.13a"
+title: ""                 # Urdu title, using dictionary terms
+title_en: "Percentages"
+stage: 1
+needs: ["1.4"]
+status: open              # open | draft | published
+author: ""                # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

@@ -1,0 +1,9 @@
+id: "4.4b"
+title: ""                 # Urdu title, using dictionary terms
+title_en: "Areas and volumes of similar figures"
+stage: 3
+needs: ["4.4a"]
+status: open              # open | draft | published
+author: ""                # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

@@ -1,9 +1,0 @@
-id: "2.6b"
-title: ""                 # Urdu title, using dictionary terms
-title_en: "Inequalities in two variables and regions"
-stage: 3
-needs: ["2.6a", "3.5"]
-status: open              # open | draft | published
-author: ""                # your GitHub username
-reviewer: ""
-sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

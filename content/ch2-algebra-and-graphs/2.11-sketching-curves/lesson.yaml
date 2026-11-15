@@ -2,7 +2,7 @@ id: "2.11"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Sketching curves"
 stage: 4
-needs: ["2.10a", "2.5e"]
+needs: ["2.10b", "2.5d"]
 status: open              # open | draft | published
 author: ""                # your GitHub username
 reviewer: ""

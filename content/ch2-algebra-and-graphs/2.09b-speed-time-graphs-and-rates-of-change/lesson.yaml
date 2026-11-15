@@ -1,0 +1,9 @@
+id: "2.9b"
+title: ""                 # Urdu title, using dictionary terms
+title_en: "Speed-time graphs and rates of change"
+stage: 3
+needs: ["2.9a", "3.3"]
+status: open              # open | draft | published
+author: ""                # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

@@ -1,7 +1,7 @@
 id: "8.3b"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Combined events: tree diagrams"
-stage: 3
+stage: 4
 needs: ["8.3a"]
 status: open              # open | draft | published
 author: ""                # your GitHub username

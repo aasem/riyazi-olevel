@@ -1,0 +1,9 @@
+id: "2.2c"
+title: ""                 # Urdu title, using dictionary terms
+title_en: "Expanding and factorising quadratic expressions"
+stage: 2
+needs: ["2.2b"]
+status: open              # open | draft | published
+author: ""                # your GitHub username
+reviewer: ""
+sources_consulted: []     # e.g. ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]

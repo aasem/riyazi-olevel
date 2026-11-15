@@ -1,8 +1,8 @@
 id: "9.2"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Interpreting statistical data"
-stage: 1
-needs: ["9.1"]
+stage: 2
+needs: ["9.4", "9.3a"]
 status: open              # open | draft | published
 author: ""                # your GitHub username
 reviewer: ""

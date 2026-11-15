@@ -1,7 +1,7 @@
 id: "5.4b"
 title: ""                 # Urdu title, using dictionary terms
 title_en: "Surface area and volume: pyramids, cones, spheres"
-stage: 3
+stage: 2
 needs: ["5.4a", "6.1"]
 status: open              # open | draft | published
 author: ""                # your GitHub username
