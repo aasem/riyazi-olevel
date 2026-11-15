@@ -154,7 +154,7 @@ function loadAll() {
   return chapters;
 }
 
-function validate(chapters) {
+function validate(chapters, people) {
   const ids = new Map();
   const all = chapters.flatMap((c) => c.lessons);
   for (const l of all) {
@@ -167,6 +167,11 @@ function validate(chapters) {
     if (!l.title_en) fail(l.where, 'title_en is missing');
     if (![1, 2, 3, 4].includes(l.stage)) fail(l.where, 'stage must be 1, 2, 3 or 4');
     if (l.status !== 'open' && !l.author) fail(l.where, 'author is required once the lesson is draft or published');
+    for (const who of [l.author, l.reviewer]) {
+      if (l.status !== 'open' && who && !people.has(String(who).toLowerCase())) {
+        fail(l.where, `"${who}" is not in contributors/contributors.yaml. Add yourself there`);
+      }
+    }
   }
   for (const l of all) {
     for (const n of l.needs || []) {
@@ -180,9 +185,34 @@ const ICON = {
   sun: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
   moon: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
   pdf: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg>',
+  menu: '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
+  search: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>',
+  close: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
 };
 
-function page({ title, root, body, lessonPdf, wide }) {
+const SCRIPT_SWITCH = `<div class="script-switch" role="group" aria-label="خط">
+      <button type="button" data-set-script="nastaliq">نستعلیق</button>
+      <button type="button" data-set-script="naskh">نسخ</button>
+    </div>`;
+
+// The book's contents: a frame beside the lesson on wide screens, a drawer on phones and tablets.
+function sideNav(chapters, root, current) {
+  return chapters.map((c) => {
+    const open = current && current.chapter === c;
+    return `<details${open ? ' open' : ''}>
+<summary><span class="ch-num num">${c.chapter}</span><span>${esc(c.title)}</span></summary>
+<ol>
+${c.lessons.map((l) => {
+    const inner = `<span class="num">${esc(l.id)}</span><span class="t">${esc(l.title)}</span>`;
+    if (l.status === 'open') return `<li class="open">${inner}</li>`;
+    return `<li${l === current ? ' class="current"' : ''}><a href="${root}lessons/${padId(l.id)}/index.html"${l === current ? ' aria-current="page"' : ''}>${inner}</a></li>`;
+  }).join('\n')}
+</ol>
+</details>`;
+  }).join('\n');
+}
+
+function page({ title, root, body, lessonPdf, layout, chapters, current, toc }) {
   return `<!DOCTYPE html>
 <html lang="ur" dir="rtl" data-script="nastaliq">
 <head>
@@ -193,27 +223,52 @@ function page({ title, root, body, lessonPdf, wide }) {
 <link rel="stylesheet" href="${root}assets/katex/katex.min.css">
 <link rel="stylesheet" href="${root}assets/style.css">
 <script src="${root}assets/site.js"></script>
+<script defer src="${root}assets/search-index.js"></script>
 </head>
-<body>
+<body data-root="${root}">
 <header class="topbar">
-  <a class="brand" href="${root}index.html">${esc(book.title)}</a>
+  <div class="tb-start">
+    <button type="button" class="icon-btn menu-btn" data-toggle-nav aria-label="فہرست">${ICON.menu}</button>
+    <a class="brand" href="${root}index.html">${esc(book.title)}</a>
+  </div>
   <div class="tools">
-    <div class="script-switch" role="group" aria-label="خط">
-      <button type="button" data-set-script="nastaliq">نستعلیق</button>
-      <button type="button" data-set-script="naskh">نسخ</button>
-    </div>
+    <button type="button" class="icon-btn" data-open-search aria-label="تلاش">${ICON.search}</button>
+    <span class="hide-sm">${SCRIPT_SWITCH}</span>
     <button type="button" class="icon-btn" data-toggle-theme aria-label="روشن یا تاریک">
       <span class="i-sun">${ICON.sun}</span><span class="i-moon">${ICON.moon}</span>
     </button>
     ${lessonPdf ? `<a class="pdf-btn" data-pdf="${lessonPdf}" href="${lessonPdf}-nastaliq.pdf" download>${ICON.pdf}<span>PDF</span></a>` : ''}
   </div>
 </header>
-<main class="${wide ? 'wide' : ''}">
+<div class="shell shell-${layout}">
+  <aside class="side" aria-label="فہرست">
+    <div class="side-top"><strong>فہرست</strong><span class="show-sm">${SCRIPT_SWITCH}</span></div>
+    <nav class="book-nav">
+${sideNav(chapters, root, current)}
+    <p class="side-link"><a href="${root}contributors/index.html">شرکائے کار</a></p>
+    </nav>
+  </aside>
+  <main>
 ${body}
-</main>
+  </main>
+  ${toc ? `<aside class="toc" aria-label="اِس سبق میں"><strong>اِس سبق میں</strong>${toc}</aside>` : ''}
+</div>
+<div class="backdrop" data-close-nav></div>
+<div class="search" hidden>
+  <div class="search-box" role="dialog" aria-label="تلاش">
+    <div class="search-row">
+      ${ICON.search}
+      <input type="text" inputmode="search" placeholder="سبق یا اصطلاح تلاش کریں" autocomplete="off" aria-label="تلاش">
+      <button type="button" class="icon-btn" data-close-search aria-label="بند کریں">${ICON.close}</button>
+    </div>
+    <ol class="results"></ol>
+  </div>
+</div>
 <footer class="footer">
+  <p>© <span class="num">${esc(book.copyright_year)}</span> ${esc(book.copyright_holder)} اور <a href="${root}contributors/index.html">شرکائے کار</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="en">CC BY-SA 4.0</a></p>
   <p><a href="${esc(book.dictionary_url)}">فرہنگِ اصطلاحات</a> · <a href="${esc(book.repo_url)}">اِس کتاب میں حصہ لیں</a></p>
-  <p class="en">${esc(book.title_en)} · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a> · ${esc(book.disclaimer)}</p>
+  <p class="small">${esc(book.disclaimer_ur)}</p>
+  <p class="en small">© ${esc(book.copyright_year)} ${esc(book.copyright_holder_en)} and contributors. Licensed under CC BY-SA 4.0. ${esc(book.disclaimer)}</p>
 </footer>
 <div class="tip" role="tooltip" hidden></div>
 </body>
@@ -221,7 +276,12 @@ ${body}
 `;
 }
 
-function lessonHtml(lesson, byId, built) {
+function personLink(username, people, root) {
+  const p = people.get(String(username).toLowerCase());
+  return p ? `<a href="${root}contributors/index.html#${esc(p.github)}">${esc(p.name)}</a>` : `<span class="en">${esc(username)}</span>`;
+}
+
+function lessonHtml(lesson, byId, built, people) {
   const parts = [];
   const nav = [];
   const terms = [];
@@ -236,6 +296,8 @@ function lessonHtml(lesson, byId, built) {
     if (s.title) nav.push(`<a href="#${s.cls}">${s.title}</a>`);
     parts.push(`<section class="sec sec-${s.cls}" id="${s.cls}">${s.title ? `<h2>${s.title}</h2>` : ''}\n${html}</section>`);
   }
+  lesson.terms = terms;
+  lesson.toc = nav.join('');
   // English terms cannot pop up on paper, so the PDF gets a list of them at the end.
   if (terms.length) {
     parts.push(`<section class="sec sec-terms print-only"><h2>اصطلاحات</h2><div class="table-wrap"><table><tbody>
@@ -253,7 +315,7 @@ ${terms.map((t) => `<tr><td>${esc(t.ur)}</td><td class="en">${esc(t.en)}</td></t
   const link = (l, cls, label) => l
     ? `<a class="${cls}" href="../${padId(l.id)}/index.html"><small>${label}</small><span><span class="num">${esc(l.id)}</span> ${esc(l.title)}</span></a>`
     : '<span></span>';
-  const credits = [lesson.author && `مصنف: <span class="en">${esc(lesson.author)}</span>`, lesson.reviewer && `نظرِ ثانی: <span class="en">${esc(lesson.reviewer)}</span>`].filter(Boolean).join(' · ');
+  const credits = [lesson.author && `مصنف: ${personLink(lesson.author, people, '../../')}`, lesson.reviewer && `نظرِ ثانی: ${personLink(lesson.reviewer, people, '../../')}`].filter(Boolean).join(' · ');
   return `<article class="lesson">
 <header class="lesson-head">
   <p class="crumb"><a href="../../index.html">باب <span class="num">${lesson.chapter.chapter}</span> · ${esc(lesson.chapter.title)}</a></p>
@@ -288,13 +350,66 @@ ${c.lessons.map((l) => {
   }).join('\n');
   return `<section class="hero">
 <h1>${esc(book.title)}</h1>
+<p class="subtitle">${esc(book.subtitle)}</p>
 <p class="tagline">${esc(book.tagline)}</p>
+<button type="button" class="hero-search" data-open-search>${ICON.search}<span>سبق یا اصطلاح تلاش کریں</span></button>
 <div class="progress" role="img" aria-label="${ready} / ${all.length}"><span style="width:${Math.max(pct, 2)}%"></span></div>
 <p class="progress-text">دستیاب اسباق: <span class="num">${ready}</span> / <span class="num">${all.length}</span></p>
 </section>
 <div class="chapters">
 ${chaptersHtml}
 </div>`;
+}
+
+// ---------- contributors ----------
+function loadPeople() {
+  const f = path.join(ROOT, 'contributors', 'contributors.yaml');
+  const list = fs.existsSync(f) ? yaml.load(fs.readFileSync(f, 'utf8')) || [] : [];
+  const people = new Map();
+  for (const p of list) {
+    if (!p || !p.github || !p.name) { fail('contributors/contributors.yaml', 'every entry needs github and name'); continue; }
+    if (p.photo && !fs.existsSync(path.join(ROOT, 'contributors', 'photos', p.photo))) {
+      fail('contributors/contributors.yaml', `photo "${p.photo}" of ${p.github} is not in contributors/photos/`);
+    }
+    people.set(String(p.github).toLowerCase(), p);
+  }
+  return people;
+}
+
+function contributorsHtml(people, all) {
+  const cardsHtml = [...people.values()].map((p) => {
+    const g = String(p.github).toLowerCase();
+    const wrote = all.filter((l) => l.status !== 'open' && String(l.author || '').toLowerCase() === g);
+    const reviewed = all.filter((l) => l.status !== 'open' && String(l.reviewer || '').toLowerCase() === g);
+    const list = (ls) => ls.map((l) => `<a class="need" href="../lessons/${padId(l.id)}/index.html"><span class="num">${esc(l.id)}</span> ${esc(l.title)}</a>`).join(' ');
+    const initial = esc(String(p.name).replace(/^ڈاکٹر\s+/, '').trim().charAt(0));
+    return `<article class="person" id="${esc(p.github)}">
+<div class="avatar">${p.photo ? `<img src="photos/${esc(p.photo)}" alt="">` : `<span>${initial}</span>`}</div>
+<div class="person-body">
+  <h2>${esc(p.name)}</h2>
+  <p class="role">${esc(p.role || '')} · <a class="en" href="https://github.com/${esc(p.github)}">@${esc(p.github)}</a></p>
+  ${p.bio ? `<p>${esc(p.bio)}</p>` : ''}
+  ${wrote.length ? `<p class="needs">تحریر: ${list(wrote)}</p>` : ''}
+  ${reviewed.length ? `<p class="needs">نظرِ ثانی: ${list(reviewed)}</p>` : ''}
+</div>
+</article>`;
+  }).join('\n');
+  return `<section class="hero"><h1>شرکائے کار</h1><p class="tagline">یہ کتاب اِن لوگوں کی محنت سے بن رہی ہے۔</p></section>
+<div class="people">
+${cardsHtml}
+</div>`;
+}
+
+// ---------- search ----------
+function searchIndex(all) {
+  return all.map((l) => ({
+    i: l.id,
+    t: l.title,
+    e: l.title_en,
+    c: l.chapter.title,
+    u: l.status === 'open' ? '' : `lessons/${padId(l.id)}/index.html`,
+    k: (l.terms || []).map((t) => [t.ur, t.en]),
+  }));
 }
 
 // ---------- files ----------
@@ -370,12 +485,13 @@ async function buildPdfs(lessons) {
 // ---------- main ----------
 (async () => {
   const chapters = loadAll();
-  validate(chapters);
+  const people = loadPeople();
+  validate(chapters, people);
   const all = chapters.flatMap((c) => c.lessons);
   const byId = new Map(all.map((l) => [l.id, l]));
   const toBuild = all.filter((l) => l.status !== 'open');
 
-  const rendered = toBuild.map((l) => [l, lessonHtml(l, byId, toBuild)]);
+  const rendered = toBuild.map((l) => [l, lessonHtml(l, byId, toBuild, people)]);
 
   if (errors.length) {
     console.error(`\n${errors.length} problem(s):`);
@@ -389,7 +505,11 @@ async function buildPdfs(lessons) {
   fs.mkdirSync(OUT, { recursive: true });
   copyAssets();
   fs.writeFileSync(path.join(OUT, '.nojekyll'), '');
-  fs.writeFileSync(path.join(OUT, 'index.html'), page({ title: book.title, root: '', body: indexHtml(chapters), wide: true }));
+  fs.writeFileSync(path.join(OUT, 'assets', 'search-index.js'), 'window.RIYAZI_INDEX = ' + JSON.stringify(searchIndex(all)) + ';\n');
+  fs.writeFileSync(path.join(OUT, 'index.html'), page({ title: `${book.title} · ${book.subtitle}`, root: '', body: indexHtml(chapters), layout: 'wide', chapters }));
+  fs.mkdirSync(path.join(OUT, 'contributors'), { recursive: true });
+  copyDir(path.join(ROOT, 'contributors', 'photos'), path.join(OUT, 'contributors', 'photos'), (n) => /\.(png|jpg|jpeg|webp)$/i.test(n));
+  fs.writeFileSync(path.join(OUT, 'contributors', 'index.html'), page({ title: `شرکائے کار · ${book.title}`, root: '../', body: contributorsHtml(people, all), layout: 'wide', chapters }));
   for (const [l, html] of rendered) {
     const dir = path.join(OUT, 'lessons', padId(l.id));
     fs.mkdirSync(dir, { recursive: true });
@@ -399,6 +519,10 @@ async function buildPdfs(lessons) {
       root: '../../',
       body: html,
       lessonPdf: `riyazi-${padId(l.id)}`,
+      layout: 'lesson',
+      chapters,
+      current: l,
+      toc: l.toc,
     }));
     console.log('page  ', l.id);
   }

@@ -50,6 +50,18 @@ sources_consulted: ["NSM D1 ch.1", "OpenStax Prealgebra 2e"]
 
 Do not change `id`, `title_en`, `stage` or `needs`.
 
+The first time, also add yourself to `contributors/contributors.yaml` so you are credited on the site:
+
+```yaml
+- github: YOUR-NAME
+  name: "آپ کا نام"
+  role: "مصنف"
+  bio: ""
+  photo: ""
+```
+
+For a photo, put a square image (at least 400 px) in `contributors/photos/` and write its file name in `photo`.
+
 ### 4. Read, note, close, write, check
 
 Open `brief.md` in your lesson folder. It has three lists: **Read**, **Cover**, **Skills to practise**.
@@ -102,16 +114,25 @@ Rules:
 
 Look at lesson 1.1a (`content/ch1-number/1.01a-prime-numbers-hcf-and-lcm/`) as the model.
 
+### Figures
+
+1. Draw the figure yourself. Never copy, trace or screenshot a figure from a book or website.
+2. Use GeoGebra for geometry and graphs (File → Download as → SVG), or diagrams.net for trees, boxes and Venn diagrams (File → Export as → SVG). PNG is also accepted, at least 1200 px wide.
+3. Use dark lines on a white or transparent background. Put only numbers and letters inside the figure; Urdu goes in the caption.
+4. Name the file in lowercase English with hyphens, for example `factor-tree-60.svg`, and save it in your lesson's `figures/` folder.
+5. In the section file, on its own line with an empty line above and below: `![عنوان اردو میں](figures/factor-tree-60.svg)`
+6. Check the figure in the preview: light theme, dark theme and PDF.
+
 ### 5. Save your work to GitHub
 
 ```bash
 git status
-git add content/
+git add content/ contributors/
 git commit -m "Lesson 1.3: first draft"
 git push -u origin lesson/1.03
 ```
 
-- `status` shows what changed. Only your lesson folder should appear.
+- `status` shows what changed. Only your lesson folder (and `contributors/` the first time) should appear.
 - `add` and `commit` save a snapshot on your computer.
 - `push` uploads it to your fork.
 
@@ -152,7 +173,7 @@ Your lesson is now on the website. Review one lesson by someone else, then claim
 
 Review a pull request:
 
-1. **Files changed**: only one lesson folder should be touched.
+1. **Files changed**: only one lesson folder should be touched, plus the writer's entry in `contributors/`.
 2. **Checks**: must be green. Download **preview** to read the page and the PDF.
 3. Comment, or **Approve**.
 4. Before merging, change `status: draft` to `status: published` in `lesson.yaml` (edit the file in the pull request).

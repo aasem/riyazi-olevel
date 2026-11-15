@@ -1,0 +1,13 @@
+# One entry per person. Add yourself in your first pull request.
+# github : your GitHub username (must match "author" in lesson.yaml)
+# name   : your name as it should appear on the site
+# role   : مدیر (editor), مصنف (writer), نظرِ ثانی (reviewer)
+# bio    : one or two sentences (optional)
+# photo  : file name inside contributors/photos/, e.g. "aasem.jpg" (optional; square, at least 400 px)
+
+- github: aasem
+  name: "ڈاکٹر عاصم بخشی"
+  name_en: "Dr. Asim Bakhshi"
+  role: "مدیر"
+  bio: ""
+  photo: ""

@@ -1,4 +1,4 @@
-# ریاضی: او لیول
+# او لیول ریاضی
 
 O Level Mathematics in Urdu. A free web textbook: one page per lesson, each with its own PDF in Nastaliq or Naskh. Light and dark themes; made for phones and tablets.
 
@@ -28,13 +28,14 @@ content/
       lesson.yaml          id, titles, stage, needs, status, author
       sections/01…08.md    the eight sections
       figures/             SVG or PNG drawn by us
-scripts/build.js           builds site/ (web pages and PDFs)
+contributors/              contributors.yaml and photos/ (credits page)
+scripts/build.js           builds site/ (web pages, PDFs, search)
 scripts/make-issues.js     creates the queue of issues (run once)
 .github/workflows/         check on pull requests, publish on merge
 ```
 
 ## Licence
 
-© 2026 the contributors. Text and figures are licensed under [CC BY-SA 4.0](LICENSE).
+© 2026 Dr. Asim Bakhshi and contributors. Text and figures are licensed under [CC BY-SA 4.0](LICENSE). Contributors are listed in `contributors/contributors.yaml` and on the site.
 
 An independent project. Not endorsed by or affiliated with Cambridge or any publisher.

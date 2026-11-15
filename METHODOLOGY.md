@@ -2,7 +2,13 @@
 
 ## 1. What we are building
 
-A free Urdu web textbook for O Level Mathematics (Cambridge 4024, Syllabus D, 2025–27) on GitHub Pages. One web page per lesson, each with its own PDF download. The reader chooses Nastaliq or Naskh, and a light or dark theme. The pages are in Urdu only; the English term appears when the reader taps an Urdu term. No whole-book PDF.
+A free Urdu web textbook for O Level Mathematics (Cambridge 4024, Syllabus D, 2025–27) on GitHub Pages. Title: **او لیول ریاضی**, subtitle "بمطابق نصاب کیمبرج او لیول ریاضی 4024".
+
+- One web page per lesson, each with its own PDF download. No whole-book PDF.
+- The reader chooses Nastaliq or Naskh, and a light or dark theme.
+- The pages are in Urdu only; the English term appears when the reader taps an Urdu term.
+- A contents frame beside the lesson on wide screens, a drawer on phones and tablets, and search over lesson titles and terms.
+- Footer: © 2026 Dr. Asim Bakhshi and contributors, CC BY-SA 4.0. Every writer and reviewer is credited on the contributors page.
 
 - Repository: https://github.com/aasem/riyazi-olevel
 - Site: https://aasem.github.io/riyazi-olevel/
@@ -101,7 +107,18 @@ Conventions:
 - Terms come from Takneeki Lughat only. A missing term is added there first.
 - Refer to other lessons by link, never "as we saw above".
 - Localise: rupees, Pakistani cities, cricket, electricity bills, mobile packages, crops, local names.
-- Figures are drawn by us (SVG or PNG).
+
+Figures:
+- Draw every figure yourself. Never copy, trace or screenshot a figure from a book or website.
+- Tools: GeoGebra for geometry and graphs (File → Download as → SVG); diagrams.net for trees, boxes and Venn diagrams (File → Export as → SVG). PNG is also accepted, at least 1200 px wide.
+- White or transparent background, dark lines. The page gives every figure a paper background, so it reads in both themes.
+- Only numbers and letters inside the figure. Urdu goes in the caption.
+- File name in lowercase English with hyphens, for example `factor-tree-60.svg`. Put it in the lesson's `figures/` folder.
+- Insert it on its own line: `![caption in Urdu](figures/factor-tree-60.svg)`.
+
+Credit:
+- Each person adds one entry to `contributors/contributors.yaml` (GitHub username, name, role, optional bio and photo) in their first pull request. The check fails if a lesson's author is not listed.
+- Photos go in `contributors/photos/`.
 
 ## 7. Workflow per lesson
 
@@ -324,6 +341,16 @@ author: "aasem"
 sources_consulted: ["NSM D1 ch.2"]
 ```
 
+You are already listed in `contributors/contributors.yaml`. A student adds their own entry there at this step:
+
+```yaml
+- github: their-username
+  name: "اُن کا نام"
+  role: "مصنف"
+  bio: ""
+  photo: ""
+```
+
 ### E. Write the eight sections
 
 Open each file in `sections/` and write below the comment line. Do not type the section heading.
@@ -356,6 +383,16 @@ $$\dots,\ -3,\ -2,\ -1,\ 0,\ 1,\ 2,\ 3,\ \dots$$
 ```
 
 The file `figures/number-line.svg` is already in the folder.
+
+To add a figure of your own:
+
+1. Draw it in GeoGebra or diagrams.net. Use dark lines on a white background, and only numbers and letters inside the figure.
+2. Export it as SVG (or PNG, at least 1200 px wide).
+3. Name it in lowercase English, for example `rational-numbers.svg`, and save it in the lesson's `figures/` folder.
+4. In the section file, leave an empty line, then write `![عنوان اردو میں](figures/rational-numbers.svg)`, then another empty line.
+5. Check it in the preview: in both themes and in the PDF.
+
+Lesson 1.1a has an example: open its `03-explanation.md` and look for `factor-tree-60.svg`.
 
 **`04-examples.md`**: each example starts with `## مثال 1`.
 
@@ -412,12 +449,12 @@ Before you finish, tick every line of `brief.md`: each Cover item is explained, 
 
 ```bash
 git status
-git add content/
+git add content/ contributors/
 git commit -m "Lesson 1.1b: first draft"
 git push -u origin lesson/1.01b
 ```
 
-`git status` should list only files in the 1.1b folder.
+`git status` should list only files in the 1.1b folder (and, for a student, `contributors/`).
 
 ### G. Pull request, check, preview
 
