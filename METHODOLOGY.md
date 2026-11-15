@@ -55,7 +55,7 @@ Questions follow one rule: **same skill, new question**. Take a skill from the b
 content/
   ch1-number/
     chapter.yaml
-    1.01-types-of-number/
+    1.01a-prime-numbers-hcf-and-lcm/
       brief.md         # Read, Cover, Skills (written by the editor)
       lesson.yaml      # id, title, stage, needs, status, author, reviewer, sources_consulted
       sections/*.md
