@@ -122,7 +122,9 @@ Look at lesson 1.1a (`content/ch1-number/1.01a-prime-numbers-hcf-and-lcm/`) as t
 4. Put only numbers and letters inside the figure; Urdu goes in the caption.
 5. Name the file in lowercase English with hyphens and save it in your lesson's `figures/` folder.
 6. In the section file, on its own line with an empty line above and below, always with the `.svg` name: `![عنوان اردو میں](figures/factor-tree-60.svg)`
-7. Check the figure in the preview: light theme, dark theme and PDF. If a TikZ file has an error, the check names the file and the line.
+7. Caption: every figure needs one. Write a short phrase with no full stop, and do not type the number. The page adds "شکل 1:", "شکل 2:" in order. In your text, write "شکل 1 دیکھیں".
+8. Size: all TikZ figures are shown at one fixed scale, so the lettering matches the text. Draw at natural size, at most 12 cm wide, and do not use `scale` to enlarge the picture.
+9. Check the figure in the preview: light theme, dark theme and PDF. If a TikZ file has an error, the check names the file and the line.
 
 ### 5. Save your work to GitHub
 

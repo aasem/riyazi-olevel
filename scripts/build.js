@@ -71,9 +71,17 @@ md.core.ruler.push('shift_headings', (state) => {
 // A term is written [[english term|اردو اصطلاح]]. The page shows the Urdu; the English appears on tap or hover.
 const TERM = /\[\[([^\[\]|\n]+)\|([^\[\]|\n]+)\]\]/g;
 
-function renderMarkdown(src, where, terms) {
+// A figure is a line on its own: ![caption](figures/name.svg). It gets a number and a caption in one fixed format.
+const FIGURE = /^!\[([^\]\n]*)\]\((figures\/[^)\s]+)\)[ \t]*$/gm;
+
+function renderMarkdown(src, where, terms, counter) {
   let text = src.replace(/<!--[\s\S]*?-->/g, '').trim();
   if (!text) return '';
+  const figures = [];
+  text = text.replace(FIGURE, (_, caption, file) => {
+    figures.push({ caption: caption.trim(), file });
+    return `\n\n\uE002${figures.length - 1}\uE003\n\n`;
+  });
   const found = [];
   text = text.replace(TERM, (_, en, ur) => {
     found.push({ en: en.trim(), ur: ur.trim() });
@@ -84,17 +92,20 @@ function renderMarkdown(src, where, terms) {
   }
   mathErrors.length = 0;
   let html = md.render(text);
+  html = html.replace(/<p>\uE002(\d+)\uE003<\/p>/g, (_, i) => {
+    const f = figures[Number(i)];
+    const n = counter ? ++counter.figures : Number(i) + 1;
+    if (!f.caption) fail(where, `figure "${f.file}" has no caption. Write ![caption](${f.file})`);
+    const caption = md.renderInline(f.caption.replace(/[۔.]\s*$/, ''));
+    return `<figure id="fig-${n}"><div class="fig"><img src="${f.file}" alt="${esc(f.caption)}"></div>`
+      + `<figcaption><span class="fig-label">شکل <span class="num">${n}</span>:</span> ${caption}</figcaption></figure>`;
+  });
   for (const m of mathErrors) fail(where, 'mathematics error: ' + m);
   html = html.replace(/\uE000(\d+)\uE001/g, (_, i) => {
     const t = found[Number(i)];
     if (terms && !terms.some((x) => x.en.toLowerCase() === t.en.toLowerCase())) terms.push(t);
     return `<span class="term" tabindex="0" data-en="${esc(t.en)}">${esc(t.ur)}</span>`;
   });
-  // A paragraph that holds only an image becomes a figure with a caption.
-  html = html.replace(
-    /<p><img src="([^"]+)" alt="([^"]*)"\s*\/?><\/p>/g,
-    (_, src2, alt) => `<figure><div class="fig"><img src="${src2}" alt="${alt}"></div><figcaption>${alt}</figcaption></figure>`
-  );
   // Tables scroll sideways on phones instead of breaking the page.
   html = html.replace(/<table>/g, '<div class="table-wrap"><table>').replace(/<\/table>/g, '</table></div>');
   return html;
@@ -286,10 +297,11 @@ function lessonHtml(lesson, byId, built, people) {
   const parts = [];
   const nav = [];
   const terms = [];
+  const counter = { figures: 0 };
   for (const s of SECTIONS) {
     const f = path.join(lesson.dir, 'sections', s.file + '.md');
     if (!fs.existsSync(f)) continue;
-    let html = renderMarkdown(fs.readFileSync(f, 'utf8'), path.relative(ROOT, f), terms);
+    let html = renderMarkdown(fs.readFileSync(f, 'utf8'), path.relative(ROOT, f), terms, counter);
     if (!html) continue;
     if (s.cls === 'examples') html = cards(html, 'example');
     if (s.cls === 'tryit') html = `<div class="card try">${html}</div>`;
@@ -426,6 +438,8 @@ const crypto = require('crypto');
 const os = require('os');
 const PREAMBLE = fs.readFileSync(path.join(__dirname, 'figure-preamble.tex'), 'utf8');
 const FIG_CACHE = path.join(ROOT, '.cache', 'figures');
+// Every TikZ figure is shown at the same scale, so its lettering is the size of the mathematics in the text.
+const FIG_PX_PER_PT = 2;
 
 function compileTikz(texFile, outSvg) {
   const body = fs.readFileSync(texFile, 'utf8');
@@ -440,7 +454,7 @@ function compileTikz(texFile, outSvg) {
 \\shipout\\vbox{\\hbox{\\box\\figbox}}
 \\end{document}
 `;
-  const key = crypto.createHash('sha1').update(doc).digest('hex');
+  const key = crypto.createHash('sha1').update(doc + FIG_PX_PER_PT).digest('hex');
   const cached = path.join(FIG_CACHE, key + '.svg');
   if (!fs.existsSync(cached)) {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'fig-'));
@@ -464,7 +478,9 @@ function compileTikz(texFile, outSvg) {
         throw e;
       }
       fs.mkdirSync(FIG_CACHE, { recursive: true });
-      fs.copyFileSync(path.join(tmp, 'fig.svg'), cached);
+      const svg = fs.readFileSync(path.join(tmp, 'fig.svg'), 'utf8')
+        .replace(/width="([\d.]+)(?:pt)?" height="([\d.]+)(?:pt)?"/, (_, w, h) => `width="${Math.round(w * FIG_PX_PER_PT)}" height="${Math.round(h * FIG_PX_PER_PT)}"`);
+      fs.writeFileSync(cached, svg);
     } finally {
       fs.rmSync(tmp, { recursive: true, force: true });
     }

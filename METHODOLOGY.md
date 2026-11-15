@@ -117,6 +117,8 @@ Figures:
 - Only numbers and letters inside the figure. Urdu goes in the caption.
 - File name in lowercase English with hyphens. Put it in the lesson's `figures/` folder.
 - Insert it on its own line, always with the `.svg` name: `![caption in Urdu](figures/factor-tree-60.svg)`.
+- Caption: every figure must have one; the check fails without it. Write a short phrase with no full stop. Do not type the number: the page adds "شکل 1:", "شکل 2:" in order and sets the caption centred below the figure in one fixed style. In the text, refer to a figure by its number, for example "شکل 1 دیکھیں".
+- Size: every TikZ figure is shown at one fixed scale, so its lettering is the same size as the mathematics in the text. Draw at natural size and keep the picture at most 12 cm wide. Do not use `scale` to enlarge it. A figure wider than the screen shrinks to fit.
 
 Credit:
 - Each person adds one entry to `contributors/contributors.yaml` (GitHub username, name, role, optional bio and photo) in their first pull request. The check fails if a lesson's author is not listed.
